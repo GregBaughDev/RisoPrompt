@@ -23,9 +23,6 @@ private slots:
     void on_copyButton_clicked();
 
     void on_newButton_clicked();
-
-    void handleTextSubmit(const QString &newValue);
-
 private:
     Ui::RisoPrompt *ui;
 };

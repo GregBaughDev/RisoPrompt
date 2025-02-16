@@ -25,6 +25,7 @@
   <property name="font">
    <font>
     <family>Terminal Grotesque</family>
+    <pointsize>16</pointsize>
    </font>
   </property>
   <property name="windowTitle">
@@ -42,7 +43,11 @@ QPushButton {
 	border-style: solid;
 	border-color: white;
 }
-</string>
+
+QListWidget::item {
+	color: rgb(255, 232, 0);
+	font-size: 30px;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="saveButton">
@@ -138,17 +143,23 @@ QPushButton {
      <number>2</number>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="testTextDisplay">
+   <widget class="ConversationWidget" name="conversationWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>100</y>
-      <width>261</width>
-      <height>74</height>
+      <x>10</x>
+      <y>59</y>
+      <width>581</width>
+      <height>421</height>
      </rect>
     </property>
-    <property name="readOnly">
-     <bool>true</bool>
+    <property name="font">
+     <font>
+      <family>Terminal Grotesque</family>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
    </widget>
   </widget>
@@ -158,6 +169,12 @@ QPushButton {
    <class>CustomPlainText</class>
    <extends>QPlainTextEdit</extends>
    <header>customplaintext.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ConversationWidget</class>
+   <extends>QWidget</extends>
+   <header>conversationwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
