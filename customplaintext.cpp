@@ -9,7 +9,7 @@ void CustomPlainText::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Return)
     {
-        emit textSubmit(this->toPlainText());
+        emit textSubmit(this->toPlainText(), MessageAuthor::USER);
         this->clear();
     }
     else

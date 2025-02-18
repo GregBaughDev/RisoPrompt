@@ -18,15 +18,15 @@ QVariant ConversationModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DisplayRole)
     {
-        return messages.at(index.row()).message(); // this should return the obj not msg
+        return QVariant::fromValue(messages.at(index.row()));
     }
 
     return QVariant();
 }
 
-void ConversationModel::addMessage(const QString &text)
+void ConversationModel::addMessage(const QString &text, const MessageAuthor &author)
 {
     beginInsertRows(QModelIndex(), messages.size(), messages.size());
-    messages.emplaceBack(text);
+    messages.emplaceBack(text, author);
     endInsertRows();
 }

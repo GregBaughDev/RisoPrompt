@@ -14,9 +14,7 @@ public:
     ConversationMessage(const ConversationMessage &) = default;
     ConversationMessage &operator=(const ConversationMessage &) = default;
 
-    //ConversationMessage(const QString message, const MessageAuthor author);
-    ConversationMessage(const QString message);
-
+    ConversationMessage(const QString message, const MessageAuthor author);
     QString message() const;
     MessageAuthor author() const;
 
@@ -25,6 +23,6 @@ private:
     MessageAuthor m_author;
 };
 
-// Q_DECLARE_METATYPE(ConversationMessage);
+Q_DECLARE_METATYPE(ConversationMessage);
 
 #endif // CONVERSATIONMESSAGE_H

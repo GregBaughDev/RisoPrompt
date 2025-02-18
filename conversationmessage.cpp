@@ -1,15 +1,9 @@
 #include "conversationmessage.h"
 
-// ConversationMessage::ConversationMessage(const QString message, const MessageAuthor author)
-// {
-//     m_message = message;
-//     m_author = author;
-// }
-
-ConversationMessage::ConversationMessage(const QString message)
+ConversationMessage::ConversationMessage(const QString message, const MessageAuthor author)
 {
     m_message = message;
-    m_author = MessageAuthor::USER;
+    m_author = author;
 }
 
 QString ConversationMessage::message() const

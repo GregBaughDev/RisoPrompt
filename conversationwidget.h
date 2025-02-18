@@ -5,7 +5,7 @@
 #include <QListView>
 #include <QVBoxLayout>
 #include "conversationmodel.h"
-#include "messagedelegate.h"
+#include "conversationmessage.h"
 
 class ConversationWidget : public QWidget
 {
@@ -15,7 +15,7 @@ public:
     ConversationWidget(QWidget *parent = nullptr);
 
 public slots:
-    void addMessage(const QString &message);
+    void addMessage(const QString &message, const MessageAuthor &author);
 
 private:
     QListView *listView;

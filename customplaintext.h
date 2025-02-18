@@ -2,6 +2,7 @@
 #define CUSTOMPLAINTEXT_H
 
 #include <QPlainTextEdit>
+#include "./conversationmessage.h"
 
 class CustomPlainText : public QPlainTextEdit
 {
@@ -11,7 +12,7 @@ public:
     void keyPressEvent(QKeyEvent *event);
 
 signals:
-    void textSubmit(QString newValue);
+    void textSubmit(QString newValue, MessageAuthor author);
 };
 
 #endif // CUSTOMPLAINTEXT_H
