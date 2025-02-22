@@ -10,6 +10,7 @@ ConversationWidget::ConversationWidget(QWidget *parent) : QWidget{parent}
     listView->setModel(model);
     listView->setItemDelegate(new MessageDelegate(this));
     listView->setFrameStyle(QFrame::NoFrame);
+    listView->setWordWrap(true);
     layout->addWidget(listView);
     setLayout(layout);
 }
