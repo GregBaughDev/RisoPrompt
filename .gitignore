@@ -1,3 +1,5 @@
 build/
+proto/*
+proto_compiled/*
 .DS_Store
 RisoPrompt.pro.user

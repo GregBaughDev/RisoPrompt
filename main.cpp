@@ -6,7 +6,6 @@
 int main(int argc, char *argv[])
 {
     qRegisterMetaType<ConversationMessage>("ConversationMessage");
-
     QApplication a(argc, argv);
     RisoPrompt w;
     w.show();

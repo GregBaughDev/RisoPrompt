@@ -15,7 +15,34 @@ SOURCES += \
     customplaintext.cpp \
     main.cpp \
     messagedelegate.cpp \
-    risoprompt.cpp
+    promptrequest.cpp \
+    risoprompt.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/citation_protobuftyperegistrations.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/content_protobuftyperegistrations.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/generative_service.qpb.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/generative_service_client.grpc.qpb.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/safety.qpb.cpp \ 
+    ./proto/generated/google/ai/generativelanguage/v1/safety_protobuftyperegistrations.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/citation.qpb.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/content.qpb.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/generative_service_protobuftyperegistrations.cpp \
+    ./proto/generated/google/api/field_behavior.qpb.cpp \
+    ./proto/generated/google/api/client.qpb.cpp \
+    ./proto/generated/google/api/launch_stage_protobuftyperegistrations.cpp \
+    ./proto/generated/google/api/http_protobuftyperegistrations.cpp \
+    ./proto/generated/google/api/resource_protobuftyperegistrations.cpp \
+    ./proto/generated/google/api/launch_stage.qpb.cpp \
+    ./proto/generated/google/api/resource.qpb.cpp \
+    ./proto/generated/google/api/field_behavior_protobuftyperegistrations.cpp \
+    ./proto/generated/google/api/annotations.qpb.cpp \
+    ./proto/generated/google/api/client_protobuftyperegistrations.cpp \
+    ./proto/generated/google/api/annotations_protobuftyperegistrations.cpp \
+    ./proto/generated/google/api/http.qpb.cpp \
+    ./proto/generated/google/protobuf/descriptor_protobuftyperegistrations.cpp \
+    ./proto/generated/google/protobuf/duration.qpb.cpp \
+    ./proto/generated/google/protobuf/descriptor.qpb.cpp \
+    ./proto/generated/google/protobuf/duration_protobuftyperegistrations.cpp
+
 
 HEADERS += \
     conversationmessage.h \
@@ -23,7 +50,21 @@ HEADERS += \
     conversationwidget.h \
     customplaintext.h \
     messagedelegate.h \
-    risoprompt.h
+    promptrequest.h \
+    risoprompt.h \
+    ./proto/generated/google/ai/generativelanguage/v1/generative_service.qpb.h \
+    ./proto/generated/google/ai/generativelanguage/v1/content.qpb.h \
+    ./proto/generated/google/ai/generativelanguage/v1/citation.qpb.h \
+    ./proto/generated/google/ai/generativelanguage/v1/generative_service_client.grpc.qpb.h \
+    ./proto/generated/google/ai/generativelanguage/v1/safety.qpb.h \
+    ./proto/generated/google/api/http.qpb.h \
+    ./proto/generated/google/api/client.qpb.h \
+    ./proto/generated/google/api/launch_stage.qpb.h \ 
+    ./proto/generated/google/api/field_behavior.qpb.h \
+    ./proto/generated/google/api/resource.qpb.h \
+    ./proto/generated/google/api/annotations.qpb.h \
+    ./proto/generated/google/protobuf/duration.qpb.h \
+    ./proto/generated/google/protobuf/descriptor.qpb.h
 
 FORMS += \
     risoprompt.ui
