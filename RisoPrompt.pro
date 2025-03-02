@@ -1,4 +1,6 @@
-QT       += core gui
+QT       += core gui grpc
+
+INCLUDEPATH += $$PWD/proto/generated
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
