@@ -20,9 +20,9 @@ void MessageDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
             painter->setPen(userMessageColour);
             painter->drawText(option.rect, Qt::AlignLeft | Qt::TextWordWrap, message.message());
             break;
-        case MessageAuthor::PROMPT:
+        case MessageAuthor::MODEL:
             painter->setPen(promptMessageColour);
-            painter->drawText(option.rect, Qt::AlignRight | Qt::TextWordWrap, message.message());
+            painter->drawText(option.rect, Qt::AlignLeft | Qt::TextWordWrap, message.message());
             break;
     }
 

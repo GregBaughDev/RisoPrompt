@@ -11,6 +11,8 @@ RisoPrompt::RisoPrompt(QWidget *parent)
     ui->setupUi(this);
 
     connect(ui->promptInput, &CustomPlainText::textSubmit, ui->conversationWidget, &ConversationWidget::addMessage);
+    connect(ui->promptInput, &CustomPlainText::textSubmit, &this->promptRequest, &PromptRequest::sendPromptRequest);
+    connect(&this->promptRequest, &PromptRequest::promptResponseReceived, ui->conversationWidget, &ConversationWidget::addMessage);
 }
 
 RisoPrompt::~RisoPrompt()

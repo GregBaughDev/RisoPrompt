@@ -4,7 +4,7 @@
 #include <QString>
 #include <QtCore/qvariant.h>
 
-enum MessageAuthor { USER, PROMPT };
+enum MessageAuthor { USER, MODEL };
 
 class ConversationMessage
 {

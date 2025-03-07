@@ -2,6 +2,7 @@
 #define RISOPROMPT_H
 
 #include <QMainWindow>
+#include "promptrequest.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,5 +26,7 @@ private slots:
     void on_newButton_clicked();
 private:
     Ui::RisoPrompt *ui;
+    PromptRequest promptRequest;
+
 };
 #endif // RISOPROMPT_H

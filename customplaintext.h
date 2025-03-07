@@ -12,7 +12,7 @@ public:
     void keyPressEvent(QKeyEvent *event);
 
 signals:
-    void textSubmit(QString newValue, MessageAuthor author);
+    void textSubmit(const QString &newValue, const MessageAuthor &author);
 };
 
 #endif // CUSTOMPLAINTEXT_H
