@@ -4,7 +4,7 @@
 ConversationWidget::ConversationWidget(QWidget *parent) : QWidget{parent}
 {
     QVBoxLayout *layout = new QVBoxLayout(this); // should this be QTPointer?
-
+    // this feels all over the place?
     listView = new QListView(this);
     model = new ConversationModel(this);
     listView->setModel(model);
@@ -20,4 +20,9 @@ void ConversationWidget::addMessage(const QString &message, const MessageAuthor 
 {
     model->addMessage(message, author);
     listView->scrollToBottom();
+}
+
+void ConversationWidget::clearMessages()
+{
+    model->resetMessages();
 }

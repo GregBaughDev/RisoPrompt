@@ -7,8 +7,8 @@
 class MessageDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
-    const int messageSpacing = 20;
-    const int fontSize = 20;
+    const int messageSpacing = 5;
+    const int fontSize = 16;
     const QColor userMessageColour = QColor(255, 232, 0);
     const QColor promptMessageColour = QColor(35, 91, 168);
 

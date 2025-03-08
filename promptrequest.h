@@ -23,6 +23,7 @@ public:
 
 public slots:
     void sendPromptRequest(const QString &prompt);
+    void resetContents();
 
 signals:
     void promptResponseReceived(const QString &response, const MessageAuthor &author);

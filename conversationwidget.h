@@ -16,6 +16,7 @@ public:
 
 public slots:
     void addMessage(const QString &message, const MessageAuthor &author);
+    void clearMessages();
 
 private:
     QListView *listView;

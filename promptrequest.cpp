@@ -17,7 +17,7 @@ PromptRequest::PromptRequest(QObject *parent) : QObject(parent)
     );
     m_client.attachChannel(m_channel);
 
-    this->addContentToCurrentContext("Do not include markdown in any of your responses", MessageAuthor::USER);
+    this->resetContents();
 }
 
 void PromptRequest::sendPromptRequest(const QString &prompt)
@@ -26,7 +26,7 @@ void PromptRequest::sendPromptRequest(const QString &prompt)
 
     GenerateContentRequest req;
     req.setContents(m_contents);
-    req.setModel("models/gemini-1.5-flash");
+    req.setModel("models/gemini-1.5-pro");
 
     std::unique_ptr<QGrpcCallReply> reply = m_client.GenerateContent(req);
     const auto *replyPtr = reply.get();
@@ -56,6 +56,12 @@ void PromptRequest::addContentToCurrentContext(const QString &prompt, const Mess
     content.setParts(parts);
     content.setRole(author == MessageAuthor::MODEL ? "Model" : "User");
     m_contents.append(content);
+}
+
+void PromptRequest::resetContents()
+{
+    m_contents.clear();
+    this->addContentToCurrentContext("Do not include markdown in any of your responses", MessageAuthor::USER);
 }
 
 

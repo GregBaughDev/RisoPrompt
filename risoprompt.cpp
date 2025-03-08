@@ -10,9 +10,16 @@ RisoPrompt::RisoPrompt(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // handle user input
     connect(ui->promptInput, &CustomPlainText::textSubmit, ui->conversationWidget, &ConversationWidget::addMessage);
     connect(ui->promptInput, &CustomPlainText::textSubmit, &this->promptRequest, &PromptRequest::sendPromptRequest);
+
+    // handle prompt response
     connect(&this->promptRequest, &PromptRequest::promptResponseReceived, ui->conversationWidget, &ConversationWidget::addMessage);
+
+    // handle new button clicked
+    connect(this, &RisoPrompt::newButtonClicked, &this->promptRequest, &PromptRequest::resetContents);
+    connect(this, &RisoPrompt::newButtonClicked, ui->conversationWidget, &ConversationWidget::clearMessages);
 }
 
 RisoPrompt::~RisoPrompt()
@@ -32,5 +39,5 @@ void RisoPrompt::on_copyButton_clicked()
 
 void RisoPrompt::on_newButton_clicked()
 {
-    // todo
+    emit newButtonClicked();
 }

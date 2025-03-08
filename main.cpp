@@ -14,11 +14,11 @@ int main(int argc, char *argv[])
 
 // to do
 
-// network call to prompt
 // loading state
 // block input until response received
-
-// save, copy & new button functionality
+// try displaying in a rich text widget
+// save and copy button functionality
 
 // consolidate styling into one place
 // remove all debugs
+// code review -> make sure m_ appended, check const correctness, check pass by reference on methods etc

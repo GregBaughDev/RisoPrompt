@@ -13,6 +13,8 @@ QT_END_NAMESPACE
 class RisoPrompt : public QMainWindow
 {
     Q_OBJECT
+    Ui::RisoPrompt *ui;
+    PromptRequest promptRequest;
 
 public:
     RisoPrompt(QWidget *parent = nullptr);
@@ -20,13 +22,11 @@ public:
 
 private slots:
     void on_saveButton_clicked();
-
     void on_copyButton_clicked();
-
     void on_newButton_clicked();
-private:
-    Ui::RisoPrompt *ui;
-    PromptRequest promptRequest;
+
+signals:
+    void newButtonClicked();
 
 };
 #endif // RISOPROMPT_H
