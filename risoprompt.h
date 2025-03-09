@@ -25,6 +25,7 @@ private slots:
     void onCopyButtonClicked();
     void onNewButtonClicked();
     void toggleLoading();
+    void toggleTextEntry();
 
 signals:
     void newButtonClicked();

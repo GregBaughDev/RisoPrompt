@@ -14,10 +14,12 @@ int main(int argc, char *argv[])
 
 // to do
 
-// block input until response received
-// try displaying in a rich text widget
+// new button isn't working now
+// allow to highlight the responses
 // save and copy button functionality
 // make and set an icon
 // consolidate styling into one place
 // remove all debugs
+// some sort of error handling/modal
+// find a way to set/change the model and api key without having to rebuild
 // code review -> make sure m_ appended, check const correctness, check pass by reference on methods etc

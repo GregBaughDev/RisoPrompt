@@ -36,9 +36,14 @@ void PromptRequest::sendPromptRequest(const QString &prompt)
         [reply = std::move(reply), this](const QGrpcStatus &status) {
             if (status.isOk()) {
                 if (const auto response = reply->read<GenerateContentResponse>())
+                {
+                    this->addContentToCurrentContext(response.value().candidates().at(0).content().parts().at(0).text(), MessageAuthor::MODEL);
                     emit promptResponseReceived(response.value().candidates().at(0).content().parts().at(0).text(), MessageAuthor::MODEL);
+                }
                 else
+                {
                     qDebug() << "Client deserialization failed!";
+                }
             } else {
                 qDebug() << "Client failed" << status;
             }
@@ -47,13 +52,13 @@ void PromptRequest::sendPromptRequest(const QString &prompt)
     );
 }
 
-void PromptRequest::addContentToCurrentContext(const QString &prompt, const MessageAuthor &author)
+void PromptRequest::addContentToCurrentContext(const QString &contents, const MessageAuthor &author)
 {
     Part part;
     QList<Part> parts;
     Content content;
 
-    part.setText(prompt);
+    part.setText(contents);
     parts.append(part);
     content.setParts(parts);
     content.setRole(author == MessageAuthor::MODEL ? "Model" : "User");

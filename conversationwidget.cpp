@@ -15,11 +15,9 @@ ConversationWidget::ConversationWidget(QWidget *parent) : QWidget{parent}
     setLayout(layout);
 }
 
-
 void ConversationWidget::addMessage(const QString &message, const MessageAuthor &author)
 {
     model->addMessage(message, author);
-    listView->scrollToBottom();
 }
 
 void ConversationWidget::clearMessages()

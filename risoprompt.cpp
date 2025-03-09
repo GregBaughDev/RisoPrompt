@@ -24,6 +24,7 @@ RisoPrompt::RisoPrompt(QWidget *parent)
 
     // toggle loading
     connect(&this->promptRequest, &PromptRequest::isLoading, this, &RisoPrompt::toggleLoading);
+    connect(&this->promptRequest, &PromptRequest::isLoading, this, &RisoPrompt::toggleTextEntry);
 }
 
 RisoPrompt::~RisoPrompt()
@@ -55,5 +56,17 @@ void RisoPrompt::toggleLoading()
     else
     {
         ui->progressBar->setVisible(true);
+    }
+}
+
+void RisoPrompt::toggleTextEntry()
+{
+    if (ui->promptInput->isReadOnly())
+    {
+        ui->promptInput->setReadOnly(false);
+    }
+    else
+    {
+        ui->promptInput->setReadOnly(true);
     }
 }

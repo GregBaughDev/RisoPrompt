@@ -26,7 +26,7 @@ public slots:
     void resetContents();
 
 signals:
-    void promptResponseReceived(const QString &response, const MessageAuthor &author);
+    void promptResponseReceived(const QString &contents, const MessageAuthor &author);
     void isLoading();
 };
 
