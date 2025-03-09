@@ -21,9 +21,10 @@ public:
     ~RisoPrompt();
 
 private slots:
-    void on_saveButton_clicked();
-    void on_copyButton_clicked();
-    void on_newButton_clicked();
+    void onSaveButtonClicked();
+    void onCopyButtonClicked();
+    void onNewButtonClicked();
+    void toggleLoading();
 
 signals:
     void newButtonClicked();

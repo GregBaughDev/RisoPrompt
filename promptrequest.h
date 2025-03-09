@@ -27,6 +27,7 @@ public slots:
 
 signals:
     void promptResponseReceived(const QString &response, const MessageAuthor &author);
+    void isLoading();
 };
 
 #endif // PROMPTREQUEST_H

@@ -9,6 +9,7 @@ RisoPrompt::RisoPrompt(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::RisoPrompt)
 {
     ui->setupUi(this);
+    ui->progressBar->setVisible(false);
 
     // handle user input
     connect(ui->promptInput, &CustomPlainText::textSubmit, ui->conversationWidget, &ConversationWidget::addMessage);
@@ -20,6 +21,9 @@ RisoPrompt::RisoPrompt(QWidget *parent)
     // handle new button clicked
     connect(this, &RisoPrompt::newButtonClicked, &this->promptRequest, &PromptRequest::resetContents);
     connect(this, &RisoPrompt::newButtonClicked, ui->conversationWidget, &ConversationWidget::clearMessages);
+
+    // toggle loading
+    connect(&this->promptRequest, &PromptRequest::isLoading, this, &RisoPrompt::toggleLoading);
 }
 
 RisoPrompt::~RisoPrompt()
@@ -27,17 +31,29 @@ RisoPrompt::~RisoPrompt()
     delete ui;
 }
 
-void RisoPrompt::on_saveButton_clicked()
+void RisoPrompt::onSaveButtonClicked()
 {
     // todo
 }
 
-void RisoPrompt::on_copyButton_clicked()
+void RisoPrompt::onCopyButtonClicked()
 {
     // todo
 }
 
-void RisoPrompt::on_newButton_clicked()
+void RisoPrompt::onNewButtonClicked()
 {
     emit newButtonClicked();
+}
+
+void RisoPrompt::toggleLoading()
+{
+    if (ui->progressBar->isVisible())
+    {
+        ui->progressBar->setVisible(false);
+    }
+    else
+    {
+        ui->progressBar->setVisible(true);
+    }
 }

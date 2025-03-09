@@ -14,11 +14,10 @@ int main(int argc, char *argv[])
 
 // to do
 
-// loading state
 // block input until response received
 // try displaying in a rich text widget
 // save and copy button functionality
-
+// make and set an icon
 // consolidate styling into one place
 // remove all debugs
 // code review -> make sure m_ appended, check const correctness, check pass by reference on methods etc

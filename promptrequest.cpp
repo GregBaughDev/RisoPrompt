@@ -28,6 +28,7 @@ void PromptRequest::sendPromptRequest(const QString &prompt)
     req.setContents(m_contents);
     req.setModel("models/gemini-1.5-pro");
 
+    emit isLoading();
     std::unique_ptr<QGrpcCallReply> reply = m_client.GenerateContent(req);
     const auto *replyPtr = reply.get();
     QObject::connect(
@@ -41,6 +42,7 @@ void PromptRequest::sendPromptRequest(const QString &prompt)
             } else {
                 qDebug() << "Client failed" << status;
             }
+            emit isLoading();
         }
     );
 }
