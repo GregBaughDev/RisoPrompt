@@ -11,6 +11,11 @@ RisoPrompt::RisoPrompt(QWidget *parent)
     ui->setupUi(this);
     ui->progressBar->setVisible(false);
 
+    // connect buttons
+    connect(ui->newButton, &QPushButton::clicked, this, &RisoPrompt::onNewButtonClicked);
+    connect(ui->copyButton, &QPushButton::clicked, this, &RisoPrompt::onCopyButtonClicked);
+    connect(ui->saveButton, &QPushButton::clicked, this, &RisoPrompt::onSaveButtonClicked);
+
     // handle user input
     connect(ui->promptInput, &CustomPlainText::textSubmit, ui->conversationWidget, &ConversationWidget::addMessage);
     connect(ui->promptInput, &CustomPlainText::textSubmit, &this->promptRequest, &PromptRequest::sendPromptRequest);
