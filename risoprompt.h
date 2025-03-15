@@ -15,6 +15,7 @@ class RisoPrompt : public QMainWindow
     Q_OBJECT
     Ui::RisoPrompt *ui;
     PromptRequest promptRequest;
+    QString m_promptModel;
 
 public:
     RisoPrompt(QWidget *parent = nullptr);
@@ -26,6 +27,8 @@ private slots:
     void onNewButtonClicked();
     void toggleLoading();
     void toggleTextEntry();
+    void setPromptModel(const QString &promptModel);
+    void onModelButtonClicked();
 
 signals:
     void newButtonClicked();

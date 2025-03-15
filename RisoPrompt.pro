@@ -17,6 +17,7 @@ SOURCES += \
     customplaintext.cpp \
     main.cpp \
     messagedelegate.cpp \
+    modelconfigdialog.cpp \
     promptrequest.cpp \
     risoprompt.cpp \
     ./proto/generated/google/ai/generativelanguage/v1/citation_protobuftyperegistrations.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     conversationwidget.h \
     customplaintext.h \
     messagedelegate.h \
+    modelconfigdialog.h \
     promptrequest.h \
     risoprompt.h \
     ./proto/generated/google/ai/generativelanguage/v1/generative_service.qpb.h \

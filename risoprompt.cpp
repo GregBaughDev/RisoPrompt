@@ -4,17 +4,20 @@
 #include <QDebug>
 #include "./customplaintext.h"
 #include "./conversationwidget.h"
+#include "./modelconfigdialog.h"
 
 RisoPrompt::RisoPrompt(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::RisoPrompt)
+    : QMainWindow(parent), ui(new Ui::RisoPrompt), promptRequest(parent, "models/gemini-1.5-pro")
 {
     ui->setupUi(this);
     ui->progressBar->setVisible(false);
+    this->m_promptModel = "models/gemini-1.5-pro";
 
     // connect buttons
     connect(ui->newButton, &QPushButton::clicked, this, &RisoPrompt::onNewButtonClicked);
     connect(ui->copyButton, &QPushButton::clicked, this, &RisoPrompt::onCopyButtonClicked);
     connect(ui->saveButton, &QPushButton::clicked, this, &RisoPrompt::onSaveButtonClicked);
+    connect(ui->modelButton, &QPushButton::clicked, this, &RisoPrompt::onModelButtonClicked);
 
     // handle user input
     connect(ui->promptInput, &CustomPlainText::textSubmit, ui->conversationWidget, &ConversationWidget::addMessage);
@@ -22,6 +25,7 @@ RisoPrompt::RisoPrompt(QWidget *parent)
 
     // handle prompt response
     connect(&this->promptRequest, &PromptRequest::promptResponseReceived, ui->conversationWidget, &ConversationWidget::addMessage);
+    connect(&this->promptRequest, &PromptRequest::currentModel, this, &RisoPrompt::setPromptModel);
 
     // handle new button clicked
     connect(this, &RisoPrompt::newButtonClicked, &this->promptRequest, &PromptRequest::resetContents);
@@ -37,9 +41,14 @@ RisoPrompt::~RisoPrompt()
     delete ui;
 }
 
-void RisoPrompt::onSaveButtonClicked()
+void RisoPrompt::onModelButtonClicked()
 {
-    // todo
+    ModelConfigDialog dialog(this, this->m_promptModel);
+
+    connect(&dialog, &ModelConfigDialog::modelChanged, &this->promptRequest, &PromptRequest::setNewModel);
+    connect(&dialog, &ModelConfigDialog::modelChanged, &this->promptRequest, &PromptRequest::resetContents);
+    connect(&dialog, &ModelConfigDialog::modelChanged, ui->conversationWidget, &ConversationWidget::clearMessages);
+    dialog.exec();
 }
 
 void RisoPrompt::onCopyButtonClicked()
@@ -50,6 +59,11 @@ void RisoPrompt::onCopyButtonClicked()
 void RisoPrompt::onNewButtonClicked()
 {
     emit newButtonClicked();
+}
+
+void RisoPrompt::onSaveButtonClicked()
+{
+    // todo
 }
 
 void RisoPrompt::toggleLoading()
@@ -74,4 +88,9 @@ void RisoPrompt::toggleTextEntry()
     {
         ui->promptInput->setReadOnly(true);
     }
+}
+
+void RisoPrompt::setPromptModel(const QString &promptModel)
+{
+    this->m_promptModel = promptModel;
 }

@@ -192,6 +192,28 @@ QListWidget::item {
      <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
+   <widget class="QPushButton" name="modelButton">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>10</y>
+      <width>51</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Terminal Grotesque</family>
+      <pointsize>18</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>model</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>

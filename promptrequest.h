@@ -16,18 +16,21 @@ class PromptRequest : public QObject
     GenerativeService::Client m_client;
     std::shared_ptr<QAbstractGrpcChannel> m_channel;
     QList<Content> m_contents;
+    QString m_model;
     void addContentToCurrentContext(const QString &prompt, const MessageAuthor &author);
 
 public:
-    PromptRequest(QObject *parent = nullptr);
+    PromptRequest(QObject *parent = nullptr, const QString &model = nullptr);
 
 public slots:
     void sendPromptRequest(const QString &prompt);
     void resetContents();
+    void setNewModel(const QString &model);
 
 signals:
     void promptResponseReceived(const QString &contents, const MessageAuthor &author);
     void isLoading();
+    void currentModel(const QString &currentModel);
 };
 
 #endif // PROMPTREQUEST_H

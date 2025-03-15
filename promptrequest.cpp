@@ -3,7 +3,7 @@
 #include <QProcessEnvironment>
 #include <QGrpcChannelOptions>
 
-PromptRequest::PromptRequest(QObject *parent) : QObject(parent)
+PromptRequest::PromptRequest(QObject *parent, const QString &model) : QObject(parent), m_model{model}
 {
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
@@ -26,7 +26,7 @@ void PromptRequest::sendPromptRequest(const QString &prompt)
 
     GenerateContentRequest req;
     req.setContents(m_contents);
-    req.setModel("models/gemini-1.5-pro");
+    req.setModel(m_model);
 
     emit isLoading();
     std::unique_ptr<QGrpcCallReply> reply = m_client.GenerateContent(req);
@@ -69,6 +69,15 @@ void PromptRequest::resetContents()
 {
     m_contents.clear();
     this->addContentToCurrentContext("Do not include markdown in any of your responses", MessageAuthor::USER);
+    qDebug() << "Messages cleared";
+
+}
+
+void PromptRequest::setNewModel(const QString &model)
+{
+    this->m_model = model;
+    qDebug() << "Model changed:" << model;
+    emit this->currentModel(m_model);
 }
 
 
