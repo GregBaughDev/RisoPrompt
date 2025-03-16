@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
 
 // allow to highlight the responses
 // save and copy button functionality
-// make and set an icon
 // consolidate styling into one place
 // remove all debugs
 // some sort of error handling/modal
