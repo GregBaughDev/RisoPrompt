@@ -188,7 +188,7 @@ QListWidget::item {
      <rect>
       <x>10</x>
       <y>570</y>
-      <width>581</width>
+      <width>300</width>
       <height>21</height>
      </rect>
     </property>

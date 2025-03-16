@@ -26,6 +26,7 @@ public slots:
     void sendPromptRequest(const QString &prompt);
     void resetContents();
     void setNewModel(const QString &model);
+    void copyMessagesToClipboard();
 
 signals:
     void promptResponseReceived(const QString &contents, const MessageAuthor &author);

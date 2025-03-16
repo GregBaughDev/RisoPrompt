@@ -2,6 +2,8 @@
 
 #include <QProcessEnvironment>
 #include <QGrpcChannelOptions>
+#include <QClipboard>
+#include <QGuiApplication>
 
 PromptRequest::PromptRequest(QObject *parent, const QString &model) : QObject(parent), m_model{model}
 {
@@ -78,6 +80,22 @@ void PromptRequest::setNewModel(const QString &model)
     this->m_model = model;
     qDebug() << "Model changed:" << model;
     emit this->currentModel(m_model);
+}
+
+void PromptRequest::copyMessagesToClipboard()
+{
+    QString text;
+
+    for (int i = 1; i < m_contents.count(); i++)
+    {
+        text += "Role: ";
+        text += m_contents.at(i).role();
+        text += " : ";
+        text += m_contents.at(i).parts().at(0).text();
+        text += "\n";
+    }
+
+    QGuiApplication::clipboard()->setText(text);
 }
 
 

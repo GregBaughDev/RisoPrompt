@@ -32,6 +32,6 @@ private slots:
 
 signals:
     void newButtonClicked();
-
+    void copyButtonClicked();
 };
 #endif // RISOPROMPT_H

@@ -34,6 +34,9 @@ RisoPrompt::RisoPrompt(QWidget *parent)
     // toggle loading
     connect(&this->promptRequest, &PromptRequest::isLoading, this, &RisoPrompt::toggleLoading);
     connect(&this->promptRequest, &PromptRequest::isLoading, this, &RisoPrompt::toggleTextEntry);
+
+    // handle copy button clicked
+    connect(this, &RisoPrompt::copyButtonClicked, &this->promptRequest, &PromptRequest::copyMessagesToClipboard);
 }
 
 RisoPrompt::~RisoPrompt()
@@ -53,7 +56,7 @@ void RisoPrompt::onModelButtonClicked()
 
 void RisoPrompt::onCopyButtonClicked()
 {
-    // todo
+    emit copyButtonClicked();
 }
 
 void RisoPrompt::onNewButtonClicked()

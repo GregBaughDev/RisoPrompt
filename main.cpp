@@ -14,12 +14,12 @@ int main(int argc, char *argv[])
 
 // to do
 
+// wip -> save button w/ sqlite
+
 // allow to highlight the responses
-// save and copy button functionality
 // consolidate styling into one place
 // remove all debugs
 // some sort of error handling/modal
-// save functionality and integrate with sqlite
 // sort styling on scrollbar
 // maybe call the list models function and display them in a dropdown instead of having to type in the model name
 // code review -> make sure m_ appended, check const correctness, check pass by reference on methods etc
