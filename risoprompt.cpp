@@ -5,6 +5,8 @@
 #include "./customplaintext.h"
 #include "./conversationwidget.h"
 #include "./modelconfigdialog.h"
+#include "./saveconversationdialog.h"
+#include "./loadconversationdialog.h"
 
 RisoPrompt::RisoPrompt(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::RisoPrompt), promptRequest(parent, "models/gemini-1.5-pro")
@@ -18,6 +20,7 @@ RisoPrompt::RisoPrompt(QWidget *parent)
     connect(ui->copyButton, &QPushButton::clicked, this, &RisoPrompt::onCopyButtonClicked);
     connect(ui->saveButton, &QPushButton::clicked, this, &RisoPrompt::onSaveButtonClicked);
     connect(ui->modelButton, &QPushButton::clicked, this, &RisoPrompt::onModelButtonClicked);
+    connect(ui->loadButton, &QPushButton::clicked, this, &RisoPrompt::onLoadButtonClicked);
 
     // handle user input
     connect(ui->promptInput, &CustomPlainText::textSubmit, ui->conversationWidget, &ConversationWidget::addMessage);
@@ -46,7 +49,7 @@ RisoPrompt::~RisoPrompt()
 
 void RisoPrompt::onModelButtonClicked()
 {
-    ModelConfigDialog dialog(this, this->m_promptModel);
+    ModelConfigDialog dialog{this, this->m_promptModel};
 
     connect(&dialog, &ModelConfigDialog::modelChanged, &this->promptRequest, &PromptRequest::setNewModel);
     connect(&dialog, &ModelConfigDialog::modelChanged, &this->promptRequest, &PromptRequest::resetContents);
@@ -66,7 +69,8 @@ void RisoPrompt::onNewButtonClicked()
 
 void RisoPrompt::onSaveButtonClicked()
 {
-    // todo
+    SaveConversationDialog dialog{this};
+    dialog.exec();
 }
 
 void RisoPrompt::toggleLoading()
@@ -96,4 +100,10 @@ void RisoPrompt::toggleTextEntry()
 void RisoPrompt::setPromptModel(const QString &promptModel)
 {
     this->m_promptModel = promptModel;
+}
+
+void RisoPrompt::onLoadButtonClicked()
+{
+    LoadConversationDialog dialog{this};
+    dialog.exec();
 }

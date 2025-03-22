@@ -17,6 +17,7 @@ SOURCES += \
     conversationmodel.cpp \
     conversationwidget.cpp \
     customplaintext.cpp \
+    loadconversationdialog.cpp \
     main.cpp \
     messagedelegate.cpp \
     modelconfigdialog.cpp \
@@ -26,7 +27,7 @@ SOURCES += \
     ./proto/generated/google/ai/generativelanguage/v1/content_protobuftyperegistrations.cpp \
     ./proto/generated/google/ai/generativelanguage/v1/generative_service.qpb.cpp \
     ./proto/generated/google/ai/generativelanguage/v1/generative_service_client.grpc.qpb.cpp \
-    ./proto/generated/google/ai/generativelanguage/v1/safety.qpb.cpp \ 
+    ./proto/generated/google/ai/generativelanguage/v1/safety.qpb.cpp \
     ./proto/generated/google/ai/generativelanguage/v1/safety_protobuftyperegistrations.cpp \
     ./proto/generated/google/ai/generativelanguage/v1/citation.qpb.cpp \
     ./proto/generated/google/ai/generativelanguage/v1/content.qpb.cpp \
@@ -46,7 +47,8 @@ SOURCES += \
     ./proto/generated/google/protobuf/descriptor_protobuftyperegistrations.cpp \
     ./proto/generated/google/protobuf/duration.qpb.cpp \
     ./proto/generated/google/protobuf/descriptor.qpb.cpp \
-    ./proto/generated/google/protobuf/duration_protobuftyperegistrations.cpp
+    ./proto/generated/google/protobuf/duration_protobuftyperegistrations.cpp \
+    saveconversationdialog.cpp
 
 
 HEADERS += \
@@ -54,6 +56,7 @@ HEADERS += \
     conversationmodel.h \
     conversationwidget.h \
     customplaintext.h \
+    loadconversationdialog.h \
     messagedelegate.h \
     modelconfigdialog.h \
     promptrequest.h \
@@ -65,12 +68,13 @@ HEADERS += \
     ./proto/generated/google/ai/generativelanguage/v1/safety.qpb.h \
     ./proto/generated/google/api/http.qpb.h \
     ./proto/generated/google/api/client.qpb.h \
-    ./proto/generated/google/api/launch_stage.qpb.h \ 
+    ./proto/generated/google/api/launch_stage.qpb.h \
     ./proto/generated/google/api/field_behavior.qpb.h \
     ./proto/generated/google/api/resource.qpb.h \
     ./proto/generated/google/api/annotations.qpb.h \
     ./proto/generated/google/protobuf/duration.qpb.h \
-    ./proto/generated/google/protobuf/descriptor.qpb.h
+    ./proto/generated/google/protobuf/descriptor.qpb.h \
+    saveconversationdialog.h
 
 FORMS += \
     risoprompt.ui

@@ -29,6 +29,7 @@ private slots:
     void toggleTextEntry();
     void setPromptModel(const QString &promptModel);
     void onModelButtonClicked();
+    void onLoadButtonClicked();
 
 signals:
     void newButtonClicked();
