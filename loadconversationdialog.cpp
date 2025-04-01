@@ -48,3 +48,5 @@ void LoadConversationDialog::onLoadClicked()
     qDebug() << "conversation loaded is" << m_tree.selectedItems().first()->text(0);
     close();
 }
+
+// probs need a delete button too!
