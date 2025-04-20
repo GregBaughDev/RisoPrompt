@@ -72,6 +72,8 @@ void RisoPrompt::onNewButtonClicked()
 void RisoPrompt::onSaveButtonClicked()
 {
     SaveConversationDialog dialog{this};
+
+    connect(&dialog, &SaveConversationDialog::conversationSaved, &this->promptRequest, &PromptRequest::saveMessagesToDB);
     dialog.exec();
 }
 

@@ -50,3 +50,4 @@ void LoadConversationDialog::onLoadClicked()
 }
 
 // probs need a delete button too!
+// and also pop up the dialog if current conversation isn't saved

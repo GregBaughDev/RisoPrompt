@@ -23,8 +23,7 @@ void SaveConversationDialog::onSaveClicked()
 {
     if (m_conversationNameText.text() != "")
     {
-        m_conversationName = m_conversationNameText.text();
-        qDebug() << "conversation name is" << m_conversationName;
+        emit conversationSaved(m_conversationNameText.text());
         close();
     }
 }

@@ -22,6 +22,7 @@ SOURCES += \
     main.cpp \
     messagedelegate.cpp \
     modelconfigdialog.cpp \
+    persistencemanager.cpp \
     promptrequest.cpp \
     risoprompt.cpp \
     ./proto/generated/google/ai/generativelanguage/v1/citation_protobuftyperegistrations.cpp \
@@ -60,6 +61,7 @@ HEADERS += \
     loadconversationdialog.h \
     messagedelegate.h \
     modelconfigdialog.h \
+    persistencemanager.h \
     promptrequest.h \
     risoprompt.h \
     ./proto/generated/google/ai/generativelanguage/v1/generative_service.qpb.h \

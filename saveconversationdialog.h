@@ -12,7 +12,6 @@ class SaveConversationDialog : public QDialog
     QLineEdit m_conversationNameText;
     QLabel m_label;
     QPushButton m_saveButton;
-    QString m_conversationName;
 public:
     SaveConversationDialog(QWidget *parent);
     void onSaveClicked();

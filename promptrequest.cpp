@@ -4,6 +4,7 @@
 #include <QGrpcChannelOptions>
 #include <QClipboard>
 #include <QGuiApplication>
+#include <persistencemanager.h>
 
 PromptRequest::PromptRequest(QObject *parent, const QString &model) : QObject(parent), m_model{model}
 {
@@ -96,6 +97,14 @@ void PromptRequest::copyMessagesToClipboard()
     }
 
     QGuiApplication::clipboard()->setText(text);
+}
+
+void PromptRequest::saveMessagesToDB(const QString &conversationName)
+{
+    for (int i = 0; i < m_contents.count(); i++)
+    {
+        PersistenceManager::insertConversationMessage(conversationName, m_contents.at(i).role(), m_contents.at(i).parts().at(0).text(), i);
+    }
 }
 
 
