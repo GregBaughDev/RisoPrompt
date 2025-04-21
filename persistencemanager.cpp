@@ -29,3 +29,8 @@ void PersistenceManager::insertConversationMessage(const QString &conversationNa
         qDebug() << "Error inserting:" << insertQuery.lastError();
     }
 }
+
+void PersistenceManager::setActiveConversation(const QString &conversationName)
+{
+    m_activeConversation = conversationName;
+}

@@ -10,7 +10,7 @@
 #include "./DBUtils.cpp"
 
 RisoPrompt::RisoPrompt(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::RisoPrompt), promptRequest(parent, "models/gemini-1.5-pro")
+    : QMainWindow(parent), ui(new Ui::RisoPrompt), promptRequest(parent, "models/gemini-1.5-pro"), m_persistenceManager{parent}
 {
     ui->setupUi(this);
     ui->progressBar->setVisible(false);
@@ -74,6 +74,7 @@ void RisoPrompt::onSaveButtonClicked()
     SaveConversationDialog dialog{this};
 
     connect(&dialog, &SaveConversationDialog::conversationSaved, &this->promptRequest, &PromptRequest::saveMessagesToDB);
+    connect(&dialog, &SaveConversationDialog::conversationSaved, &this->m_persistenceManager, &PersistenceManager::setActiveConversation);
     dialog.exec();
 }
 

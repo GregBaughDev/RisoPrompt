@@ -16,9 +16,8 @@ int main(int argc, char *argv[])
 
 // wip -> save & load w/ sqlite
     // save -> show dialog and allow the user to store it with a name
-        // NEXT TIME - save the conversation message name in PersistenceManager
     // load -> show dialog and allow the user to select chat
-        // overwrite flows etc
+    // flows for discarding unsaved changes
 
 // allow to highlight the responses
 // consolidate styling into one place
