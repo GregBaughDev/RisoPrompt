@@ -20,6 +20,7 @@ public:
 
 public slots:
     void setActiveConversation(const QString &conversationName);
+    void deleteConversation(const QString &conversationName);
 };
 
 #endif // PERSISTENCEMANAGER_H

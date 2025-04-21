@@ -15,8 +15,9 @@ int main(int argc, char *argv[])
 // to do
 
 // wip -> save & load w/ sqlite
-    // save -> show dialog and allow the user to store it with a name
     // load -> show dialog and allow the user to select chat
+        // delete button
+        // load the convo
     // flows for discarding unsaved changes
 
 // allow to highlight the responses

@@ -34,3 +34,18 @@ void PersistenceManager::setActiveConversation(const QString &conversationName)
 {
     m_activeConversation = conversationName;
 }
+
+void PersistenceManager::deleteConversation(const QString &conversationName)
+{
+    QSqlQuery deleteQuery{QSqlDatabase::database()};
+
+    deleteQuery.prepare("DELETE FROM risoprompt WHERE conversation_name = :conversationName");
+    deleteQuery.bindValue(":conversationName", conversationName);
+
+    bool deleted = deleteQuery.exec();
+
+    if (!deleted)
+    {
+        qDebug() << "Error deleting conversation:" << deleteQuery.lastError();
+    }
+}

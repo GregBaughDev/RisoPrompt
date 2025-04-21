@@ -1,7 +1,7 @@
 #include "loadconversationdialog.h"
 
 LoadConversationDialog::LoadConversationDialog(QWidget *parent) :
-    QDialog{parent}, m_loadButton{this}, m_label{this}, m_tree{this}
+    QDialog{parent}, m_loadButton{this}, m_label{this}, m_tree{this}, m_deleteButton{this}
 {
     setWindowTitle("Load conversation");
     setFixedSize(400, 200);
@@ -19,7 +19,11 @@ LoadConversationDialog::LoadConversationDialog(QWidget *parent) :
 
     m_loadButton.move(50, 160);
     m_loadButton.setText("load");
-    m_loadButton.setFixedSize(300, 30);
+    m_loadButton.setFixedSize(140, 30);
+
+    m_deleteButton.move(210, 160);
+    m_deleteButton.setText("delete");
+    m_deleteButton.setFixedSize(140, 30);
 
     // hardcode the data for the minute
     QList<QTreeWidgetItem*> items;
@@ -40,14 +44,20 @@ LoadConversationDialog::LoadConversationDialog(QWidget *parent) :
     m_tree.insertTopLevelItems(0, items);
 
     connect(&this->m_loadButton, &QPushButton::clicked, this, &LoadConversationDialog::onLoadClicked);
+    connect(&this->m_deleteButton, &QPushButton::clicked, this, &LoadConversationDialog::onDeleteClicked);
 }
 
 void LoadConversationDialog::onLoadClicked()
 {
+    // need to check there is an item selected
     emit conversationLoaded(m_tree.selectedItems().first()->text(0));
     qDebug() << "conversation loaded is" << m_tree.selectedItems().first()->text(0);
     close();
 }
 
-// probs need a delete button too!
-// and also pop up the dialog if current conversation isn't saved
+void LoadConversationDialog::onDeleteClicked()
+{
+    // just hardcoding this for testing atm
+    emit conversationDeleted(m_tree.selectedItems().first()->text(0));
+    // will also need to delete the conversation from the m_tree
+}

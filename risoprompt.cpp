@@ -110,5 +110,7 @@ void RisoPrompt::setPromptModel(const QString &promptModel)
 void RisoPrompt::onLoadButtonClicked()
 {
     LoadConversationDialog dialog{this};
+
+    connect(&dialog, &LoadConversationDialog::conversationDeleted, &this->m_persistenceManager, &PersistenceManager::deleteConversation);
     dialog.exec();
 }
