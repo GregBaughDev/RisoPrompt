@@ -10,14 +10,13 @@ PromptRequest::PromptRequest(QObject *parent, const QString &model) : QObject(pa
 {
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
-    QHash<QByteArray, QByteArray> optionsMetadata {};
+    QHash<QByteArray, QByteArray> optionsMetadata{};
     optionsMetadata["content-type"] = "application/x-protobuf";
     optionsMetadata["X-Goog-Api-Key"] = env.value("API_KEY", "").toUtf8();
 
     m_channel = std::make_shared<QGrpcHttp2Channel>(
         QUrl("https://generativelanguage.googleapis.com/google.ai.generativelanguage.v1/GenerateContent"),
-        QGrpcChannelOptions().setMetadata(optionsMetadata)
-    );
+        QGrpcChannelOptions().setMetadata(optionsMetadata));
     m_client.attachChannel(m_channel);
 
     this->resetContents();
@@ -36,8 +35,10 @@ void PromptRequest::sendPromptRequest(const QString &prompt)
     const auto *replyPtr = reply.get();
     QObject::connect(
         replyPtr, &QGrpcCallReply::finished, replyPtr,
-        [reply = std::move(reply), this](const QGrpcStatus &status) {
-            if (status.isOk()) {
+        [reply = std::move(reply), this](const QGrpcStatus &status)
+        {
+            if (status.isOk())
+            {
                 if (const auto response = reply->read<GenerateContentResponse>())
                 {
                     this->addContentToCurrentContext(response.value().candidates().at(0).content().parts().at(0).text(), MessageAuthor::MODEL);
@@ -47,12 +48,13 @@ void PromptRequest::sendPromptRequest(const QString &prompt)
                 {
                     qDebug() << "Client deserialization failed!";
                 }
-            } else {
+            }
+            else
+            {
                 qDebug() << "Client failed" << status;
             }
             emit isLoading();
-        }
-    );
+        });
 }
 
 void PromptRequest::addContentToCurrentContext(const QString &contents, const MessageAuthor &author)
@@ -73,7 +75,6 @@ void PromptRequest::resetContents()
     m_contents.clear();
     this->addContentToCurrentContext("Do not include markdown in any of your responses", MessageAuthor::USER);
     qDebug() << "Messages cleared";
-
 }
 
 void PromptRequest::setNewModel(const QString &model)
@@ -107,5 +108,22 @@ void PromptRequest::saveMessagesToDB(const QString &conversationName)
     }
 }
 
+void PromptRequest::loadConversation(const QString &conversationName)
+{
+    // reset contents
+    m_contents.clear();
 
+    // load conversation
+    QList<StoredConversationMessage> storedMessages = PersistenceManager::loadConversation(conversationName);
 
+    for (int i = 0; i < storedMessages.count(); i++)
+    {
+        this->addContentToCurrentContext(storedMessages.at(i).message, storedMessages.at(i).author);
+
+        if (i != 0) // first message sets context so we don't want to display it to the user
+        {
+            // todo: rename this signal as this isn't technically a prompt response received
+            emit promptResponseReceived(storedMessages.at(i).message, storedMessages.at(i).author);
+        }
+    }
+}

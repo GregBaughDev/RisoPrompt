@@ -21,7 +21,7 @@ public:
     LoadConversationDialog(QWidget *parent);
 
 signals:
-    void conversationLoaded(const QString selectedItem); // todo - what's the arg type
+    void conversationLoaded(const QString selectedItem);
     void conversationDeleted(const QString selectedItem);
 };
 

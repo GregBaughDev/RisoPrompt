@@ -112,5 +112,8 @@ void RisoPrompt::onLoadButtonClicked()
     LoadConversationDialog dialog{this};
 
     connect(&dialog, &LoadConversationDialog::conversationDeleted, &this->m_persistenceManager, &PersistenceManager::deleteConversation);
+    connect(&dialog, &LoadConversationDialog::conversationLoaded, ui->conversationWidget, &ConversationWidget::clearMessages);
+    connect(&dialog, &LoadConversationDialog::conversationLoaded, &this->promptRequest, &PromptRequest::loadConversation);
+
     dialog.exec();
 }

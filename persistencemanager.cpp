@@ -2,13 +2,9 @@
 #include <QtSql/QSqlQuery>
 #include <QDateTime>
 #include <QtSql/qsqlerror.h>
+#include <QSqlRecord>
 
 PersistenceManager::PersistenceManager(QObject *parent) : QObject{parent} {}
-
-void PersistenceManager::loadConversation(const QString &conversationName)
-{
-    // this should return a list of messages and their author
-}
 
 void PersistenceManager::insertConversationMessage(const QString &conversationName, const QString &author, const QString &messageBody, const int &sequence)
 {
@@ -48,4 +44,44 @@ void PersistenceManager::deleteConversation(const QString &conversationName)
     {
         qDebug() << "Error deleting conversation:" << deleteQuery.lastError();
     }
+}
+
+void PersistenceManager::populateConversationMetadata(QList<ConversationMetadata> *list)
+{
+    QSqlQueryModel metadataQuery;
+    metadataQuery.setQuery("SELECT conversation_name, created_at FROM risoprompt GROUP BY conversation_name");
+
+    for (int i = 0; i < metadataQuery.rowCount(); i++)
+    {
+        ConversationMetadata meta;
+        meta.name = metadataQuery.record(i).value("conversation_name").toString();
+        meta.dateTime = metadataQuery.record(i).value("created_at").toString();
+
+        list->append(meta);
+    }
+}
+
+QList<StoredConversationMessage> PersistenceManager::loadConversation(const QString &conversationName)
+{
+    QList<StoredConversationMessage> messageList;
+    QSqlQuery conversationQuery;
+    conversationQuery.prepare("SELECT message_body, author FROM risoprompt WHERE conversation_name = :conversationName ORDER BY sequence ASC");
+    conversationQuery.bindValue(":conversationName", conversationName);
+
+    bool queried = conversationQuery.exec();
+
+    if (!queried)
+    {
+        qDebug() << "Error retrieving conversations:" << conversationQuery.lastError();
+    }
+
+    while (conversationQuery.next())
+    {
+        StoredConversationMessage message;
+        message.message = conversationQuery.value(0).toString();
+        message.author = conversationQuery.value(1).toString() == "User" ? MessageAuthor::USER : MessageAuthor::MODEL;
+        messageList.append(message);
+    }
+
+    return messageList;
 }

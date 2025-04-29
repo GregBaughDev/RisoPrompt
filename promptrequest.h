@@ -28,6 +28,7 @@ public slots:
     void setNewModel(const QString &model);
     void copyMessagesToClipboard();
     void saveMessagesToDB(const QString &conversationName);
+    void loadConversation(const QString &conversationName);
 
 signals:
     void promptResponseReceived(const QString &contents, const MessageAuthor &author);
