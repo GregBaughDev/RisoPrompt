@@ -14,9 +14,7 @@ int main(int argc, char *argv[])
 
 // to do
 
-// wip -> save & load w/ sqlite
-    // flows for discarding unsaved changes
-    // prompt to save when there's unsaved changes?
+// wip -> save & load w/ sqlite - TEST THE FLOW!
 
 // allow to highlight the responses
 // consolidate styling into one place

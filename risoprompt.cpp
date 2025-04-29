@@ -66,13 +66,16 @@ void RisoPrompt::onCopyButtonClicked()
 
 void RisoPrompt::onNewButtonClicked()
 {
+    m_persistenceManager.setActiveConversation("");
     emit newButtonClicked();
 }
 
 void RisoPrompt::onSaveButtonClicked()
 {
-    SaveConversationDialog dialog{this};
+    SaveConversationDialog dialog{this, m_persistenceManager.getActiveConversationName()};
 
+    // the below is a bit hacky, but the below deletes the current conversation (if it exists) in the DB before storing the updated version
+    connect(&dialog, &SaveConversationDialog::conversationSaved, &this->m_persistenceManager, &PersistenceManager::deleteConversation);
     connect(&dialog, &SaveConversationDialog::conversationSaved, &this->promptRequest, &PromptRequest::saveMessagesToDB);
     connect(&dialog, &SaveConversationDialog::conversationSaved, &this->m_persistenceManager, &PersistenceManager::setActiveConversation);
     dialog.exec();

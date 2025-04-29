@@ -13,7 +13,7 @@ class SaveConversationDialog : public QDialog
     QLabel m_label;
     QPushButton m_saveButton;
 public:
-    SaveConversationDialog(QWidget *parent);
+    SaveConversationDialog(QWidget *parent, QString conversationName);
     void onSaveClicked();
 
 signals:

@@ -1,6 +1,6 @@
 #include "saveconversationdialog.h"
 
-SaveConversationDialog::SaveConversationDialog(QWidget *parent) :
+SaveConversationDialog::SaveConversationDialog(QWidget *parent, QString conversationName) :
     QDialog{parent}, m_conversationNameText{this}, m_label{this}, m_saveButton{this}
 {
     setWindowTitle("Save conversation");
@@ -15,6 +15,8 @@ SaveConversationDialog::SaveConversationDialog(QWidget *parent) :
     m_saveButton.move(50, 60);
     m_saveButton.setText("save");
     m_saveButton.setFixedSize(300, 30);
+
+    m_conversationNameText.setText(conversationName);
 
     connect(&this->m_saveButton, &QPushButton::clicked, this, &SaveConversationDialog::onSaveClicked);
 }

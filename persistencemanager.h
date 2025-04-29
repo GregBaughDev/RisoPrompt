@@ -23,7 +23,8 @@ struct StoredConversationMessage {
 class PersistenceManager : public QObject
 {
     Q_OBJECT
-    QVariant m_activeConversation;
+    // TO DO - Sort out the mix of camel and snake case!
+    QString m_activeConversation = "";
     int conversationCheckpoint; // this will be set on load and will be used to know which messages need to be persisted
 
 public:
@@ -32,6 +33,7 @@ public:
     static void initiateDBConnection();
     static void insertConversationMessage(const QString &conversationName, const QString &author, const QString &messageBody, const int &sequence);
     static QList<StoredConversationMessage> loadConversation(const QString &conversationName);
+    QString getActiveConversationName();
 
 public slots:
     void setActiveConversation(const QString &conversationName);

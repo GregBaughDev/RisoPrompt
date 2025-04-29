@@ -85,3 +85,8 @@ QList<StoredConversationMessage> PersistenceManager::loadConversation(const QStr
 
     return messageList;
 }
+
+QString PersistenceManager::getActiveConversationName()
+{
+    return m_activeConversation;
+}
