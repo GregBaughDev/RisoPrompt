@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
 // to do
 
 // wip -> save & load w/ sqlite
-    // delete flow
     // flows for discarding unsaved changes
     // prompt to save when there's unsaved changes?
 

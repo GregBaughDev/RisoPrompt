@@ -59,6 +59,6 @@ void LoadConversationDialog::onDeleteClicked()
     if (!m_tree.selectedItems().isEmpty())
     {
         emit conversationDeleted(m_tree.selectedItems().first()->text(0));
-        // will also need to delete the conversation from the m_tree
+        close();
     }
 }
