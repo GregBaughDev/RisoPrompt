@@ -14,12 +14,7 @@ int main(int argc, char *argv[])
 
 // to do
 
-// wip -> save & load w/ sqlite - TEST THE FLOW!
-
-// allow to highlight the responses
-// consolidate styling into one place
 // output debugs to a file
-// some sort of error handling/modal
+// consolidate styling into one place
 // allow updating the api key w/out rebuilding
-// maybe call the list models function and display them in a dropdown instead of having to type in the model name
-// code review -> make sure m_ appended, check const correctness, check pass by reference on methods etc
+// code review -> make sure "m" appended (and camel cased OR snake cased), check const correctness, check pass by reference on methods etc

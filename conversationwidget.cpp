@@ -3,8 +3,7 @@
 
 ConversationWidget::ConversationWidget(QWidget *parent) : QWidget{parent}
 {
-    QVBoxLayout *layout = new QVBoxLayout(this); // should this be QTPointer?
-    // this feels all over the place?
+    QVBoxLayout *layout = new QVBoxLayout(this);
     listView = new QListView(this);
     model = new ConversationModel(this);
     listView->setModel(model);

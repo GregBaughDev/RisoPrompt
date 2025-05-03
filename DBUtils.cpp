@@ -45,14 +45,4 @@ namespace DBUtils {
 
         qDebug() << "db" << dbName << "open!";
     }
-
-    // query use the QSqlDatabase::database()
-
-    //     //query.exec("SELECT * FROM risoprompt;");
-    // while (query.next())
-    // {
-    //     qDebug() << "name" << query.value(0).toString();
-    // }
-
-    // connect buttons
 }

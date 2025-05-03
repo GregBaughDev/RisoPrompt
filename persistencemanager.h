@@ -10,12 +10,14 @@
 
 #include "conversationmessage.h"
 
-struct ConversationMetadata {
+struct ConversationMetadata
+{
     QString name;
     QString dateTime;
 };
 
-struct StoredConversationMessage {
+struct StoredConversationMessage
+{
     MessageAuthor author;
     QString message;
 };
@@ -25,7 +27,6 @@ class PersistenceManager : public QObject
     Q_OBJECT
     // TO DO - Sort out the mix of camel and snake case!
     QString m_activeConversation = "";
-    int conversationCheckpoint; // this will be set on load and will be used to know which messages need to be persisted
 
 public:
     PersistenceManager(QObject *parent);

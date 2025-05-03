@@ -122,7 +122,6 @@ void PromptRequest::loadConversation(const QString &conversationName)
 
         if (i != 0) // first message sets context so we don't want to display it to the user
         {
-            // todo: rename this signal as this isn't technically a prompt response received
             emit promptResponseReceived(storedMessages.at(i).message, storedMessages.at(i).author);
         }
     }

@@ -9,7 +9,6 @@
 
 using namespace google::ai::generativelanguage::v1;
 
-// todo rename this class to something else
 class PromptRequest : public QObject
 {
     Q_OBJECT
