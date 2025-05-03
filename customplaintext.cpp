@@ -1,5 +1,4 @@
 #include "customplaintext.h"
-#include <QDebug>
 
 CustomPlainText::CustomPlainText(QWidget *parent)
     : QPlainTextEdit{parent}

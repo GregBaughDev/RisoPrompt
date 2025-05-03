@@ -3,6 +3,8 @@
 #include <QDateTime>
 #include <QtSql/qsqlerror.h>
 #include <QSqlRecord>
+#include <QFile>
+#include <QtLogging>
 
 PersistenceManager::PersistenceManager(QObject *parent) : QObject{parent} {}
 
@@ -22,7 +24,7 @@ void PersistenceManager::insertConversationMessage(const QString &conversationNa
 
     if (!inserted)
     {
-        qDebug() << "Error inserting:" << insertQuery.lastError();
+        qCritical() << "Error inserting:" << insertQuery.lastError();
     }
 }
 
@@ -42,7 +44,7 @@ void PersistenceManager::deleteConversation(const QString &conversationName)
 
     if (!deleted)
     {
-        qDebug() << "Error deleting conversation:" << deleteQuery.lastError();
+        qCritical() << "Error deleting conversation:" << deleteQuery.lastError();
     }
 }
 
@@ -72,7 +74,7 @@ QList<StoredConversationMessage> PersistenceManager::loadConversation(const QStr
 
     if (!queried)
     {
-        qDebug() << "Error retrieving conversations:" << conversationQuery.lastError();
+        qCritical() << "Error retrieving conversations:" << conversationQuery.lastError();
     }
 
     while (conversationQuery.next())
@@ -89,4 +91,40 @@ QList<StoredConversationMessage> PersistenceManager::loadConversation(const QStr
 QString PersistenceManager::getActiveConversationName()
 {
     return m_activeConversation;
+}
+
+void PersistenceManager::initiateDBConnection()
+{
+    QString dbName = "risoprompt.db";
+    bool dbFileExists = QFile::exists(dbName);
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(dbName);
+    bool opened = db.open();
+
+    if (!opened)
+    {
+        qCritical() << "error opening DB:" << db.lastError();
+    }
+
+    if (!dbFileExists)
+    {
+        QSqlQuery query{db};
+
+        bool tableCreated = query.exec(""
+                                       "CREATE TABLE risoprompt("
+                                       "conversation_name TEXT NOT NULL, "
+                                       "author TEXT NOT NULL, "
+                                       "message_body TEXT NOT NULL, "
+                                       "created_at TEXT NOT NULL, "
+                                       "sequence INTEGER NOT NULL"
+                                       ");");
+
+        if (!tableCreated)
+        {
+            qCritical() << "Table creation failed:" << query.lastError();
+        }
+    }
+
+    qInfo() << "db" << dbName << "open!";
 }

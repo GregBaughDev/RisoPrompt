@@ -46,12 +46,12 @@ void PromptRequest::sendPromptRequest(const QString &prompt)
                 }
                 else
                 {
-                    qDebug() << "Client deserialization failed!";
+                    qCritical() << "Client deserialization failed!";
                 }
             }
             else
             {
-                qDebug() << "Client failed" << status;
+                qCritical() << "Client failed" << status;
             }
             emit isLoading();
         });
@@ -74,13 +74,13 @@ void PromptRequest::resetContents()
 {
     m_contents.clear();
     this->addContentToCurrentContext("Do not include markdown in any of your responses", MessageAuthor::USER);
-    qDebug() << "Messages cleared";
+    qInfo() << "Messages cleared";
 }
 
 void PromptRequest::setNewModel(const QString &model)
 {
     this->m_model = model;
-    qDebug() << "Model changed:" << model;
+    qInfo() << "Model changed:" << model;
     emit this->currentModel(m_model);
 }
 

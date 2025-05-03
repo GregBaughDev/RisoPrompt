@@ -7,7 +7,6 @@
 #include "./modelconfigdialog.h"
 #include "./saveconversationdialog.h"
 #include "./loadconversationdialog.h"
-#include "./DBUtils.cpp"
 
 RisoPrompt::RisoPrompt(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::RisoPrompt), promptRequest(parent, "models/gemini-1.5-pro"), m_persistenceManager{parent}
@@ -16,7 +15,7 @@ RisoPrompt::RisoPrompt(QWidget *parent)
     ui->progressBar->setVisible(false);
     this->m_promptModel = "models/gemini-1.5-pro";
 
-    DBUtils::initiateDBConnection();
+    PersistenceManager::initiateDBConnection();
 
     connect(ui->newButton, &QPushButton::clicked, this, &RisoPrompt::onNewButtonClicked);
     connect(ui->copyButton, &QPushButton::clicked, this, &RisoPrompt::onCopyButtonClicked);
