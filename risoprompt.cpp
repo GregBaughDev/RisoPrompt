@@ -97,10 +97,12 @@ void RisoPrompt::toggleTextEntry()
     if (ui->promptInput->isReadOnly())
     {
         ui->promptInput->setReadOnly(false);
+        ui->promptInput->setVisible(true);
     }
     else
     {
         ui->promptInput->setReadOnly(true);
+        ui->promptInput->setVisible(false);
     }
 }
 
