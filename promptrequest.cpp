@@ -1,24 +1,13 @@
 #include "promptrequest.h"
 
-#include <QProcessEnvironment>
 #include <QGrpcChannelOptions>
 #include <QClipboard>
 #include <QGuiApplication>
 #include <persistencemanager.h>
 
-PromptRequest::PromptRequest(QObject *parent, const QString &model) : QObject(parent), m_model{model}
+PromptRequest::PromptRequest(QObject *parent, const QString &model, const QString &apiKey) : QObject(parent), m_model{model}, m_apiKey{apiKey}
 {
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-
-    QHash<QByteArray, QByteArray> optionsMetadata{};
-    optionsMetadata["content-type"] = "application/x-protobuf";
-    optionsMetadata["X-Goog-Api-Key"] = env.value("API_KEY", "").toUtf8();
-
-    m_channel = std::make_shared<QGrpcHttp2Channel>(
-        QUrl("https://generativelanguage.googleapis.com/google.ai.generativelanguage.v1/GenerateContent"),
-        QGrpcChannelOptions().setMetadata(optionsMetadata));
-    m_client.attachChannel(m_channel);
-
+    initialiseGRPCChannelAndClient();
     this->resetContents();
 }
 
@@ -81,7 +70,13 @@ void PromptRequest::setNewModel(const QString &model)
 {
     this->m_model = model;
     qInfo() << "Model changed:" << model;
-    emit this->currentModel(m_model);
+}
+
+void PromptRequest::setNewApiKey(const QString &apiKey)
+{
+    this->m_apiKey = apiKey;
+    qInfo() << "Api key updated";
+    initialiseGRPCChannelAndClient();
 }
 
 void PromptRequest::copyMessagesToClipboard()
@@ -125,4 +120,30 @@ void PromptRequest::loadConversation(const QString &conversationName)
             emit promptResponseReceived(storedMessages.at(i).message, storedMessages.at(i).author);
         }
     }
+}
+
+void PromptRequest::initialiseGRPCChannelAndClient()
+{
+    qInfo() << "Initialising GRPC channel and client...";
+
+    QHash<QByteArray, QByteArray> optionsMetadata{};
+    optionsMetadata["content-type"] = "application/x-protobuf";
+    optionsMetadata["X-Goog-Api-Key"] = m_apiKey.toUtf8();
+
+    m_channel = std::make_shared<QGrpcHttp2Channel>(
+        QUrl("https://generativelanguage.googleapis.com/google.ai.generativelanguage.v1/GenerateContent"),
+        QGrpcChannelOptions().setMetadata(optionsMetadata));
+    m_client.attachChannel(m_channel);
+
+    qInfo() << "initialisation complete";
+}
+
+QString PromptRequest::getModel()
+{
+    return m_model;
+}
+
+QString PromptRequest::getApiKey()
+{
+    return m_apiKey;
 }

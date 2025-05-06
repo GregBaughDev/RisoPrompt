@@ -23,7 +23,7 @@ SaveConversationDialog::SaveConversationDialog(QWidget *parent, QString conversa
 
 void SaveConversationDialog::onSaveClicked()
 {
-    if (m_conversationNameText.text() != "")
+    if (!m_conversationNameText.text().isEmpty())
     {
         emit conversationSaved(m_conversationNameText.text());
         close();

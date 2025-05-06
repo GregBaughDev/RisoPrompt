@@ -2,18 +2,23 @@
 #include "ui_risoprompt.h"
 
 #include <QDebug>
+#include <QProcessEnvironment>
 #include "./customplaintext.h"
 #include "./conversationwidget.h"
 #include "./modelconfigdialog.h"
 #include "./saveconversationdialog.h"
 #include "./loadconversationdialog.h"
 
+QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+
 RisoPrompt::RisoPrompt(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::RisoPrompt), promptRequest(parent, "models/gemini-1.5-pro"), m_persistenceManager{parent}
+    : QMainWindow(parent),
+      ui(new Ui::RisoPrompt),
+      promptRequest(parent, "models/gemini-2.0-flash", env.value("API_KEY", "")),
+      m_persistenceManager{parent}
 {
     ui->setupUi(this);
     ui->progressBar->setVisible(false);
-    this->m_promptModel = "models/gemini-1.5-pro";
 
     PersistenceManager::initiateDBConnection();
 
@@ -29,7 +34,6 @@ RisoPrompt::RisoPrompt(QWidget *parent)
 
     // handle prompt response
     connect(&this->promptRequest, &PromptRequest::promptResponseReceived, ui->conversationWidget, &ConversationWidget::addMessage);
-    connect(&this->promptRequest, &PromptRequest::currentModel, this, &RisoPrompt::setPromptModel);
 
     // handle new button clicked
     connect(this, &RisoPrompt::newButtonClicked, &this->promptRequest, &PromptRequest::resetContents);
@@ -50,11 +54,10 @@ RisoPrompt::~RisoPrompt()
 
 void RisoPrompt::onModelButtonClicked()
 {
-    ModelConfigDialog dialog{this, this->m_promptModel};
+    ModelConfigDialog dialog{this, this->promptRequest.getModel(), this->promptRequest.getApiKey()};
 
     connect(&dialog, &ModelConfigDialog::modelChanged, &this->promptRequest, &PromptRequest::setNewModel);
-    connect(&dialog, &ModelConfigDialog::modelChanged, &this->promptRequest, &PromptRequest::resetContents);
-    connect(&dialog, &ModelConfigDialog::modelChanged, ui->conversationWidget, &ConversationWidget::clearMessages);
+    connect(&dialog, &ModelConfigDialog::apiKeyChanged, &this->promptRequest, &PromptRequest::setNewApiKey);
     dialog.exec();
 }
 
@@ -104,11 +107,6 @@ void RisoPrompt::toggleTextEntry()
         ui->promptInput->setReadOnly(true);
         ui->promptInput->setVisible(false);
     }
-}
-
-void RisoPrompt::setPromptModel(const QString &promptModel)
-{
-    this->m_promptModel = promptModel;
 }
 
 void RisoPrompt::onLoadButtonClicked()

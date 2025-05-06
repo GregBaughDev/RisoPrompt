@@ -16,15 +16,20 @@ class PromptRequest : public QObject
     std::shared_ptr<QAbstractGrpcChannel> m_channel;
     QList<Content> m_contents;
     QString m_model;
+    QString m_apiKey;
     void addContentToCurrentContext(const QString &prompt, const MessageAuthor &author);
+    void initialiseGRPCChannelAndClient();
 
 public:
-    PromptRequest(QObject *parent = nullptr, const QString &model = nullptr);
+    PromptRequest(QObject *parent = nullptr, const QString &model = nullptr, const QString &apiKey = nullptr);
+    QString getModel();
+    QString getApiKey();
 
 public slots:
     void sendPromptRequest(const QString &prompt);
     void resetContents();
     void setNewModel(const QString &model);
+    void setNewApiKey(const QString &apiKey);
     void copyMessagesToClipboard();
     void saveMessagesToDB(const QString &conversationName);
     void loadConversation(const QString &conversationName);
@@ -32,7 +37,6 @@ public slots:
 signals:
     void promptResponseReceived(const QString &contents, const MessageAuthor &author);
     void isLoading();
-    void currentModel(const QString &currentModel);
 };
 
 #endif // PROMPTREQUEST_H
