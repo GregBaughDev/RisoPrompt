@@ -19,8 +19,8 @@ public slots:
     void clearMessages();
 
 private:
-    QListView *listView;
-    ConversationModel *model;
+    QListView *mListView;
+    ConversationModel *mModel;
 };
 
 #endif // CONVERSATIONWIDGET_H

@@ -30,7 +30,7 @@ void PersistenceManager::insertConversationMessage(const QString &conversationNa
 
 void PersistenceManager::setActiveConversation(const QString &conversationName)
 {
-    m_activeConversation = conversationName;
+    mActiveConversation = conversationName;
 }
 
 void PersistenceManager::deleteConversation(const QString &conversationName)
@@ -90,7 +90,7 @@ QList<StoredConversationMessage> PersistenceManager::loadConversation(const QStr
 
 QString PersistenceManager::getActiveConversationName()
 {
-    return m_activeConversation;
+    return mActiveConversation;
 }
 
 void PersistenceManager::initiateDBConnection()

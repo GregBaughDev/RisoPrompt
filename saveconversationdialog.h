@@ -9,9 +9,9 @@
 class SaveConversationDialog : public QDialog
 {
     Q_OBJECT
-    QLineEdit m_conversationNameText;
-    QLabel m_label;
-    QPushButton m_saveButton;
+    QLineEdit mConversationNameText;
+    QLabel mLabel;
+    QPushButton mSaveButton;
 
 public:
     SaveConversationDialog(QWidget *parent, QString conversationName);

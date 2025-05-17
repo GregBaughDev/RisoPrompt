@@ -16,8 +16,8 @@ class RisoPrompt : public QMainWindow
     Q_OBJECT
     Ui::RisoPrompt *ui;
     PromptRequest promptRequest;
-    ModelConfig m_modelConfig;
-    PersistenceManager m_persistenceManager;
+    ModelConfig mModelConfig;
+    PersistenceManager mMersistenceManager;
 
 public:
     RisoPrompt(QWidget *parent = nullptr);

@@ -10,12 +10,12 @@
 class ModelConfigDialog : public QDialog
 {
     Q_OBJECT
-    QLineEdit m_modelEditorText;
-    QLabel m_modelLabel;
-    QPushButton m_saveButton;
-    QLabel m_apiKeyLabel;
-    QLineEdit m_apiKeyEditorText;
-    ModelConfig m_modelConfig;
+    QLineEdit mModelEditorText;
+    QLabel mModelLabel;
+    QPushButton mSaveButton;
+    QLabel mApiKeyLabel;
+    QLineEdit mApiKeyEditorText;
+    ModelConfig mModelConfig;
 
 public:
     ModelConfigDialog(QWidget *parent, const ModelConfig &modelConfig);

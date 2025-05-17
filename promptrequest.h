@@ -13,11 +13,11 @@ using namespace google::ai::generativelanguage::v1;
 class PromptRequest : public QObject
 {
     Q_OBJECT
-    GenerativeService::Client m_client;
-    std::shared_ptr<QAbstractGrpcChannel> m_channel;
-    QList<Content> m_contents;
-    QString m_model;
-    QString m_apiKey;
+    GenerativeService::Client mClient;
+    std::shared_ptr<QAbstractGrpcChannel> mChannel;
+    QList<Content> mContents;
+    QString mModel;
+    QString mApiKey;
     void addContentToCurrentContext(const QString &prompt, const MessageAuthor &author);
     void initialiseGRPCChannelAndClient();
 

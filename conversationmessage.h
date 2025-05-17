@@ -19,8 +19,8 @@ public:
     MessageAuthor author() const;
 
 private:
-    QString m_message;
-    MessageAuthor m_author;
+    QString mMessage;
+    MessageAuthor mAuthor;
 };
 
 Q_DECLARE_METATYPE(ConversationMessage);

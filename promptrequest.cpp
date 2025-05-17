@@ -16,11 +16,11 @@ void PromptRequest::sendPromptRequest(const QString &prompt)
     this->addContentToCurrentContext(prompt, MessageAuthor::USER);
 
     GenerateContentRequest req;
-    req.setContents(m_contents);
-    req.setModel(m_model);
+    req.setContents(mContents);
+    req.setModel(mModel);
 
     emit isLoading();
-    std::unique_ptr<QGrpcCallReply> reply = m_client.GenerateContent(req);
+    std::unique_ptr<QGrpcCallReply> reply = mClient.GenerateContent(req);
     const auto *replyPtr = reply.get();
     QObject::connect(
         replyPtr, &QGrpcCallReply::finished, replyPtr,
@@ -56,25 +56,25 @@ void PromptRequest::addContentToCurrentContext(const QString &contents, const Me
     parts.append(part);
     content.setParts(parts);
     content.setRole(author == MessageAuthor::MODEL ? "Model" : "User");
-    m_contents.append(content);
+    mContents.append(content);
 }
 
 void PromptRequest::resetContents()
 {
-    m_contents.clear();
+    mContents.clear();
     this->addContentToCurrentContext("Do not include markdown in any of your responses", MessageAuthor::USER);
     qInfo() << "Messages cleared";
 }
 
 void PromptRequest::setNewModel(const QString &model)
 {
-    this->m_model = model;
+    this->mModel = model;
     qInfo() << "Model changed:" << model;
 }
 
 void PromptRequest::setNewApiKey(const QString &apiKey)
 {
-    this->m_apiKey = apiKey;
+    this->mApiKey = apiKey;
     qInfo() << "Api key updated";
     initialiseGRPCChannelAndClient();
 }
@@ -83,12 +83,12 @@ void PromptRequest::copyMessagesToClipboard()
 {
     QString text;
 
-    for (int i = 1; i < m_contents.count(); i++)
+    for (int i = 1; i < mContents.count(); i++)
     {
         text += "Role: ";
-        text += m_contents.at(i).role();
+        text += mContents.at(i).role();
         text += " : ";
-        text += m_contents.at(i).parts().at(0).text();
+        text += mContents.at(i).parts().at(0).text();
         text += "\n";
     }
 
@@ -97,16 +97,16 @@ void PromptRequest::copyMessagesToClipboard()
 
 void PromptRequest::saveMessagesToDB(const QString &conversationName)
 {
-    for (int i = 0; i < m_contents.count(); i++)
+    for (int i = 0; i < mContents.count(); i++)
     {
-        PersistenceManager::insertConversationMessage(conversationName, m_contents.at(i).role(), m_contents.at(i).parts().at(0).text(), i);
+        PersistenceManager::insertConversationMessage(conversationName, mContents.at(i).role(), mContents.at(i).parts().at(0).text(), i);
     }
 }
 
 void PromptRequest::loadConversation(const QString &conversationName)
 {
     // reset contents
-    m_contents.clear();
+    mContents.clear();
 
     // load conversation
     QList<StoredConversationMessage> storedMessages = PersistenceManager::loadConversation(conversationName);
@@ -128,12 +128,12 @@ void PromptRequest::initialiseGRPCChannelAndClient()
 
     QHash<QByteArray, QByteArray> optionsMetadata{};
     optionsMetadata["content-type"] = "application/x-protobuf";
-    optionsMetadata["X-Goog-Api-Key"] = m_apiKey.toUtf8();
+    optionsMetadata["X-Goog-Api-Key"] = mApiKey.toUtf8();
 
-    m_channel = std::make_shared<QGrpcHttp2Channel>(
+    mChannel = std::make_shared<QGrpcHttp2Channel>(
         QUrl("https://generativelanguage.googleapis.com/google.ai.generativelanguage.v1/GenerateContent"),
         QGrpcChannelOptions().setMetadata(optionsMetadata));
-    m_client.attachChannel(m_channel);
+    mClient.attachChannel(mChannel);
 
     qInfo() << "initialisation complete";
 }

@@ -31,8 +31,7 @@ struct ModelConfig
 class PersistenceManager : public QObject
 {
     Q_OBJECT
-    // TO DO - Sort out the mix of camel and snake case!
-    QString m_activeConversation = "";
+    QString mActiveConversation = "";
 
 public:
     PersistenceManager(QObject *parent);

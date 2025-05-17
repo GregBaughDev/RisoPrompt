@@ -2,29 +2,29 @@
 
 #include "persistencemanager.h"
 
-LoadConversationDialog::LoadConversationDialog(QWidget *parent) : QDialog{parent}, m_loadButton{this}, m_deleteButton{this}, m_label{this}, m_tree{this}
+LoadConversationDialog::LoadConversationDialog(QWidget *parent) : QDialog{parent}, mLoadButton{this}, mDeleteButton{this}, mLabel{this}, mTree{this}
 {
     setWindowTitle("Load conversation");
     setFixedSize(600, 200);
 
-    m_label.move(50, 10);
-    m_label.setText("Choose conversation to load:");
+    mLabel.move(50, 10);
+    mLabel.setText("Choose conversation to load:");
 
-    m_tree.setColumnCount(2);
-    m_tree.move(50, 30);
-    m_tree.setFixedHeight(110);
-    m_tree.setFixedWidth(500);
-    m_tree.setColumnWidth(0, 250);
-    m_tree.setColumnWidth(1, 245);
-    m_tree.setHeaderHidden(true);
+    mTree.setColumnCount(2);
+    mTree.move(50, 30);
+    mTree.setFixedHeight(110);
+    mTree.setFixedWidth(500);
+    mTree.setColumnWidth(0, 250);
+    mTree.setColumnWidth(1, 245);
+    mTree.setHeaderHidden(true);
 
-    m_loadButton.move(50, 160);
-    m_loadButton.setText("load");
-    m_loadButton.setFixedSize(240, 30);
+    mLoadButton.move(50, 160);
+    mLoadButton.setText("load");
+    mLoadButton.setFixedSize(240, 30);
 
-    m_deleteButton.move(310, 160);
-    m_deleteButton.setText("delete");
-    m_deleteButton.setFixedSize(240, 30);
+    mDeleteButton.move(310, 160);
+    mDeleteButton.setText("delete");
+    mDeleteButton.setFixedSize(240, 30);
 
     QList<ConversationMetadata> metadata;
     PersistenceManager::populateConversationMetadata(&metadata);
@@ -33,32 +33,32 @@ LoadConversationDialog::LoadConversationDialog(QWidget *parent) : QDialog{parent
 
     for (int i = 0; i < metadata.length(); i++)
     {
-        QTreeWidgetItem *item = new QTreeWidgetItem(&m_tree);
+        QTreeWidgetItem *item = new QTreeWidgetItem(&mTree);
         item->setText(0, metadata.at(i).name);
         item->setText(1, metadata.at(i).dateTime);
         items.append(item);
     }
 
-    m_tree.insertTopLevelItems(0, items);
+    mTree.insertTopLevelItems(0, items);
 
-    connect(&this->m_loadButton, &QPushButton::clicked, this, &LoadConversationDialog::onLoadClicked);
-    connect(&this->m_deleteButton, &QPushButton::clicked, this, &LoadConversationDialog::onDeleteClicked);
+    connect(&this->mLoadButton, &QPushButton::clicked, this, &LoadConversationDialog::onLoadClicked);
+    connect(&this->mDeleteButton, &QPushButton::clicked, this, &LoadConversationDialog::onDeleteClicked);
 }
 
 void LoadConversationDialog::onLoadClicked()
 {
-    if (!m_tree.selectedItems().isEmpty())
+    if (!mTree.selectedItems().isEmpty())
     {
-        emit conversationLoaded(m_tree.selectedItems().first()->text(0));
+        emit conversationLoaded(mTree.selectedItems().first()->text(0));
         close();
     }
 }
 
 void LoadConversationDialog::onDeleteClicked()
 {
-    if (!m_tree.selectedItems().isEmpty())
+    if (!mTree.selectedItems().isEmpty())
     {
-        emit conversationDeleted(m_tree.selectedItems().first()->text(0));
+        emit conversationDeleted(mTree.selectedItems().first()->text(0));
         close();
     }
 }

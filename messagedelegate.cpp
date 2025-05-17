@@ -9,7 +9,7 @@ void MessageDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     painter->save();
 
     QFont font = painter->font();
-    font.setPixelSize(fontSize);
+    font.setPixelSize(mFontSize);
     painter->setFont(font);
 
     ConversationMessage message = index.data().value<ConversationMessage>();
@@ -17,11 +17,11 @@ void MessageDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     switch (message.author())
     {
         case MessageAuthor::USER:
-            painter->setPen(userMessageColour);
+            painter->setPen(mUserMessageColour);
             painter->drawText(option.rect, Qt::AlignLeft | Qt::TextWordWrap, message.message());
             break;
         case MessageAuthor::MODEL:
-            painter->setPen(promptMessageColour);
+            painter->setPen(mPromptMessageColour);
             painter->drawText(option.rect, Qt::AlignLeft | Qt::TextWordWrap, message.message());
             break;
     }
@@ -34,9 +34,9 @@ QSize MessageDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
     QString message = index.data().value<ConversationMessage>().message();
 
     QFont font = option.font;
-    font.setPixelSize(fontSize);
+    font.setPixelSize(mFontSize);
     QFontMetrics fm(font);
 
     QRect textRect = fm.boundingRect(QRect(0, 0, option.rect.width(), 0), Qt::TextWordWrap | Qt::AlignLeft, message);
-    return QSize(option.rect.width(), textRect.height() + messageSpacing);
+    return QSize(option.rect.width(), textRect.height() + mMessageSpacing);
 }

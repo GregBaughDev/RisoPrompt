@@ -30,4 +30,4 @@ int main(int argc, char *argv[])
 }
 
 // to do
-// code review -> make sure "m" appended (and camel cased OR snake cased), check const correctness, check pass by reference on methods etc
+// follow up: get the list of available models and display as drop down

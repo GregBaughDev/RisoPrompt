@@ -2,16 +2,16 @@
 
 ConversationMessage::ConversationMessage(const QString message, const MessageAuthor author)
 {
-    m_message = message;
-    m_author = author;
+    mMessage = message;
+    mAuthor = author;
 }
 
 QString ConversationMessage::message() const
 {
-    return m_message;
+    return mMessage;
 }
 
 MessageAuthor ConversationMessage::author() const
 {
-    return m_author;
+    return mAuthor;
 }

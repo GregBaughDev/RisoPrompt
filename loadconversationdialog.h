@@ -10,10 +10,10 @@
 class LoadConversationDialog : public QDialog
 {
     Q_OBJECT
-    QPushButton m_loadButton;
-    QPushButton m_deleteButton;
-    QLabel m_label;
-    QTreeWidget m_tree;
+    QPushButton mLoadButton;
+    QPushButton mDeleteButton;
+    QLabel mLabel;
+    QTreeWidget mTree;
     void onLoadClicked();
     void onDeleteClicked();
 
