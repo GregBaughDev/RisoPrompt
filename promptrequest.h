@@ -6,6 +6,7 @@
 #include <memory.h>
 #include "./proto/generated/google/ai/generativelanguage/v1/generative_service_client.grpc.qpb.h"
 #include "./conversationmessage.h"
+#include "./persistencemanager.h"
 
 using namespace google::ai::generativelanguage::v1;
 
@@ -21,9 +22,7 @@ class PromptRequest : public QObject
     void initialiseGRPCChannelAndClient();
 
 public:
-    PromptRequest(QObject *parent = nullptr, const QString &model = nullptr, const QString &apiKey = nullptr);
-    QString getModel();
-    QString getApiKey();
+    PromptRequest(QObject *parent = nullptr);
 
 public slots:
     void sendPromptRequest(const QString &prompt);

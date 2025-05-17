@@ -106,6 +106,10 @@ void PersistenceManager::initiateDBConnection()
     {
         qCritical() << "error opening DB:" << db.lastError();
     }
+    else
+    {
+        qInfo() << "db" << dbName << "open!";
+    }
 
     if (!dbFileExists)
     {
@@ -122,9 +126,97 @@ void PersistenceManager::initiateDBConnection()
 
         if (!tableCreated)
         {
-            qCritical() << "Table creation failed:" << query.lastError();
+            qCritical() << "Table creation failed - risoprompt:" << query.lastError();
+        }
+        else
+        {
+            qInfo() << "Risoprompt table created";
+        }
+
+        tableCreated = query.exec(""
+                                  "CREATE TABLE modelconfig("
+                                  "model TEXT, "
+                                  "api_key TEXT, "
+                                  "user TEXT"
+                                  ");");
+
+        if (!tableCreated)
+        {
+            qCritical() << "Table creation failed - modelconfig:" << query.lastError();
+        }
+        else
+        {
+            qInfo() << "Modelconfig table created";
+        }
+
+        bool createRootUser = query.exec("INSERT INTO modelconfig (user) VALUES ('root')");
+
+        if (!createRootUser)
+        {
+            qCritical() << "Unable to create root user";
+        }
+        else
+        {
+            qInfo() << "Root user created";
         }
     }
+}
 
-    qInfo() << "db" << dbName << "open!";
+ModelConfig PersistenceManager::loadModelConfig()
+{
+    QSqlQuery query{QSqlDatabase::database()};
+    ModelConfig config;
+
+    query.prepare("SELECT * FROM modelconfig");
+
+    bool queried = query.exec();
+
+    if (!queried)
+    {
+        qCritical() << "Error querying model config:" << query.lastError();
+    }
+
+    while (query.next())
+    {
+        config.model = query.value(0).toString();
+        config.apiKey = query.value(1).toString();
+    }
+
+    return config;
+}
+
+void PersistenceManager::persistModel(const QString &model)
+{
+    QSqlQuery query{QSqlDatabase::database()};
+    query.prepare("UPDATE modelconfig SET model = :model WHERE user = 'root'");
+    query.bindValue(":model", model);
+
+    bool updated = query.exec();
+
+    if (!updated)
+    {
+        qCritical() << "Error updating model:" << query.lastError();
+    }
+    else
+    {
+        qInfo() << "Model persisted to db";
+    }
+}
+
+void PersistenceManager::persistApiKey(const QString &apiKey)
+{
+    QSqlQuery query{QSqlDatabase::database()};
+    query.prepare("UPDATE modelconfig SET api_key = :apiKey WHERE user = 'root'");
+    query.bindValue(":apiKey", apiKey);
+
+    bool updated = query.exec();
+
+    if (!updated)
+    {
+        qCritical() << "Error updating api key:" << query.lastError();
+    }
+    else
+    {
+        qInfo() << "Api key persisted to db";
+    }
 }

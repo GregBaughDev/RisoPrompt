@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QPushButton>
+#include "persistencemanager.h"
 
 class ModelConfigDialog : public QDialog
 {
@@ -12,13 +13,12 @@ class ModelConfigDialog : public QDialog
     QLineEdit m_modelEditorText;
     QLabel m_modelLabel;
     QPushButton m_saveButton;
-    QString m_promptModel;
     QLabel m_apiKeyLabel;
-    QString m_apiKey;
     QLineEdit m_apiKeyEditorText;
+    ModelConfig m_modelConfig;
 
 public:
-    ModelConfigDialog(QWidget *parent, const QString promptModel, const QString apiKey);
+    ModelConfigDialog(QWidget *parent, const ModelConfig &modelConfig);
     void onSaveClicked();
 
 signals:

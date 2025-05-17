@@ -16,8 +16,7 @@ class RisoPrompt : public QMainWindow
     Q_OBJECT
     Ui::RisoPrompt *ui;
     PromptRequest promptRequest;
-    QString m_promptModel;
-    QString m_apiKey;
+    ModelConfig m_modelConfig;
     PersistenceManager m_persistenceManager;
 
 public:
@@ -32,6 +31,8 @@ private slots:
     void toggleTextEntry();
     void onModelButtonClicked();
     void onLoadButtonClicked();
+    void setNewModel(const QString &model);
+    void setNewApiKey(const QString &key);
 
 signals:
     void newButtonClicked();

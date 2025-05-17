@@ -14,13 +14,23 @@ QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 RisoPrompt::RisoPrompt(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::RisoPrompt),
-      promptRequest(parent, "models/gemini-2.0-flash", env.value("API_KEY", "")),
       m_persistenceManager{parent}
 {
     ui->setupUi(this);
     ui->progressBar->setVisible(false);
 
     PersistenceManager::initiateDBConnection();
+
+    m_modelConfig = PersistenceManager::loadModelConfig();
+
+    if (m_modelConfig.model == nullptr || m_modelConfig.apiKey == nullptr)
+    {
+        qWarning() << "Model configuration has missing values";
+        this->onModelButtonClicked();
+    }
+
+    promptRequest.setNewApiKey(m_modelConfig.apiKey);
+    promptRequest.setNewModel(m_modelConfig.model);
 
     connect(ui->newButton, &QPushButton::clicked, this, &RisoPrompt::onNewButtonClicked);
     connect(ui->copyButton, &QPushButton::clicked, this, &RisoPrompt::onCopyButtonClicked);
@@ -54,10 +64,15 @@ RisoPrompt::~RisoPrompt()
 
 void RisoPrompt::onModelButtonClicked()
 {
-    ModelConfigDialog dialog{this, this->promptRequest.getModel(), this->promptRequest.getApiKey()};
+    ModelConfigDialog dialog{this, this->m_modelConfig};
 
     connect(&dialog, &ModelConfigDialog::modelChanged, &this->promptRequest, &PromptRequest::setNewModel);
+    connect(&dialog, &ModelConfigDialog::modelChanged, &this->m_persistenceManager, &PersistenceManager::persistModel);
+    connect(&dialog, &ModelConfigDialog::modelChanged, this, &RisoPrompt::setNewModel);
     connect(&dialog, &ModelConfigDialog::apiKeyChanged, &this->promptRequest, &PromptRequest::setNewApiKey);
+    connect(&dialog, &ModelConfigDialog::apiKeyChanged, &this->m_persistenceManager, &PersistenceManager::persistApiKey);
+    connect(&dialog, &ModelConfigDialog::apiKeyChanged, this, &RisoPrompt::setNewApiKey);
+
     dialog.exec();
 }
 
@@ -119,4 +134,14 @@ void RisoPrompt::onLoadButtonClicked()
     connect(&dialog, &LoadConversationDialog::conversationLoaded, &this->m_persistenceManager, &PersistenceManager::setActiveConversation);
 
     dialog.exec();
+}
+
+void RisoPrompt::setNewModel(const QString &model)
+{
+    m_modelConfig.model = model;
+}
+
+void RisoPrompt::setNewApiKey(const QString &key)
+{
+    m_modelConfig.apiKey = key;
 }

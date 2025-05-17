@@ -22,6 +22,12 @@ struct StoredConversationMessage
     QString message;
 };
 
+struct ModelConfig
+{
+    QString model = nullptr;
+    QString apiKey = nullptr;
+};
+
 class PersistenceManager : public QObject
 {
     Q_OBJECT
@@ -34,11 +40,14 @@ public:
     static void initiateDBConnection();
     static void insertConversationMessage(const QString &conversationName, const QString &author, const QString &messageBody, const int &sequence);
     static QList<StoredConversationMessage> loadConversation(const QString &conversationName);
+    static ModelConfig loadModelConfig();
     QString getActiveConversationName();
 
 public slots:
     void setActiveConversation(const QString &conversationName);
     void deleteConversation(const QString &conversationName);
+    void persistModel(const QString &model);
+    void persistApiKey(const QString &apiKey);
 };
 
 #endif // PERSISTENCEMANAGER_H

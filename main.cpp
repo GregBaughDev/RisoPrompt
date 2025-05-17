@@ -30,10 +30,4 @@ int main(int argc, char *argv[])
 }
 
 // to do
-
-// UPDATE API & MODEL FLOW - Should be persisted in the DB
-    // check DB
-    // no credentials -> open a bespoke dialog
-    // persist the key and model in DB
-
 // code review -> make sure "m" appended (and camel cased OR snake cased), check const correctness, check pass by reference on methods etc

@@ -5,7 +5,7 @@
 #include <QGuiApplication>
 #include <persistencemanager.h>
 
-PromptRequest::PromptRequest(QObject *parent, const QString &model, const QString &apiKey) : QObject(parent), m_model{model}, m_apiKey{apiKey}
+PromptRequest::PromptRequest(QObject *parent) : QObject(parent)
 {
     initialiseGRPCChannelAndClient();
     this->resetContents();
@@ -136,14 +136,4 @@ void PromptRequest::initialiseGRPCChannelAndClient()
     m_client.attachChannel(m_channel);
 
     qInfo() << "initialisation complete";
-}
-
-QString PromptRequest::getModel()
-{
-    return m_model;
-}
-
-QString PromptRequest::getApiKey()
-{
-    return m_apiKey;
 }
