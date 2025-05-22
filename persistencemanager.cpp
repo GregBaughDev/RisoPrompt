@@ -5,8 +5,100 @@
 #include <QSqlRecord>
 #include <QFile>
 #include <QtLogging>
+#include <QStandardPaths>
+#include <QDir>
 
 PersistenceManager::PersistenceManager(QObject *parent) : QObject{parent} {}
+
+void PersistenceManager::initiateDBConnection()
+{
+    QString dataLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QDir dataDir{dataLocation};
+
+    if (!dataDir.exists())
+    {
+        bool dataDirCreated = dataDir.mkpath(".");
+
+        if (dataDirCreated)
+        {
+            qInfo() << dataDir.dirName() << " dir made";
+        }
+        else
+        {
+            qCritical() << dataDir.dirName() << "not created";
+            throw;
+        }
+    }
+
+    QString dbFile = dataLocation + "/risoprompt.db";
+    bool dbFileExists = QFile::exists(dbFile);
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(dbFile);
+    bool opened = db.open();
+
+    if (!opened)
+    {
+        qCritical() << "error opening DB:" << db.lastError();
+    }
+    else
+    {
+        qInfo() << "db" << dbFile << "open!";
+    }
+
+    if (!dbFileExists)
+    {
+        QSqlQuery query{db};
+
+        bool tableCreated = query.exec(""
+                                       "CREATE TABLE risoprompt("
+                                       "conversation_name TEXT NOT NULL, "
+                                       "author TEXT NOT NULL, "
+                                       "message_body TEXT NOT NULL, "
+                                       "created_at TEXT NOT NULL, "
+                                       "sequence INTEGER NOT NULL"
+                                       ");");
+
+        if (!tableCreated)
+        {
+            qCritical() << "Table creation failed - risoprompt:" << query.lastError();
+            throw query.lastError();
+        }
+        else
+        {
+            qInfo() << "Risoprompt table created";
+        }
+
+        tableCreated = query.exec(""
+                                  "CREATE TABLE modelconfig("
+                                  "model TEXT, "
+                                  "api_key TEXT, "
+                                  "user TEXT"
+                                  ");");
+
+        if (!tableCreated)
+        {
+            qCritical() << "Table creation failed - modelconfig:" << query.lastError();
+            throw query.lastError();
+        }
+        else
+        {
+            qInfo() << "Modelconfig table created";
+        }
+
+        bool createRootUser = query.exec("INSERT INTO modelconfig (user) VALUES ('root')");
+
+        if (!createRootUser)
+        {
+            qCritical() << "Unable to create root user";
+            throw query.lastError();
+        }
+        else
+        {
+            qInfo() << "Root user created";
+        }
+    }
+}
 
 void PersistenceManager::insertConversationMessage(const QString &conversationName, const QString &author, const QString &messageBody, const int &sequence)
 {
@@ -93,75 +185,6 @@ QString PersistenceManager::getActiveConversationName()
     return mActiveConversation;
 }
 
-void PersistenceManager::initiateDBConnection()
-{
-    QString dbName = "risoprompt.db";
-    bool dbFileExists = QFile::exists(dbName);
-
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(dbName);
-    bool opened = db.open();
-
-    if (!opened)
-    {
-        qCritical() << "error opening DB:" << db.lastError();
-    }
-    else
-    {
-        qInfo() << "db" << dbName << "open!";
-    }
-
-    if (!dbFileExists)
-    {
-        QSqlQuery query{db};
-
-        bool tableCreated = query.exec(""
-                                       "CREATE TABLE risoprompt("
-                                       "conversation_name TEXT NOT NULL, "
-                                       "author TEXT NOT NULL, "
-                                       "message_body TEXT NOT NULL, "
-                                       "created_at TEXT NOT NULL, "
-                                       "sequence INTEGER NOT NULL"
-                                       ");");
-
-        if (!tableCreated)
-        {
-            qCritical() << "Table creation failed - risoprompt:" << query.lastError();
-        }
-        else
-        {
-            qInfo() << "Risoprompt table created";
-        }
-
-        tableCreated = query.exec(""
-                                  "CREATE TABLE modelconfig("
-                                  "model TEXT, "
-                                  "api_key TEXT, "
-                                  "user TEXT"
-                                  ");");
-
-        if (!tableCreated)
-        {
-            qCritical() << "Table creation failed - modelconfig:" << query.lastError();
-        }
-        else
-        {
-            qInfo() << "Modelconfig table created";
-        }
-
-        bool createRootUser = query.exec("INSERT INTO modelconfig (user) VALUES ('root')");
-
-        if (!createRootUser)
-        {
-            qCritical() << "Unable to create root user";
-        }
-        else
-        {
-            qInfo() << "Root user created";
-        }
-    }
-}
-
 ModelConfig PersistenceManager::loadModelConfig()
 {
     QSqlQuery query{QSqlDatabase::database()};
@@ -174,6 +197,7 @@ ModelConfig PersistenceManager::loadModelConfig()
     if (!queried)
     {
         qCritical() << "Error querying model config:" << query.lastError();
+        throw query.lastError();
     }
 
     while (query.next())

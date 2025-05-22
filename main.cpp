@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QStandardPaths>
 #include "conversationmessage.h"
 
 QtMessageHandler originalHandler = nullptr;
@@ -10,7 +11,8 @@ void logToFile(QtMsgType type, const QMessageLogContext &context, const QString 
 {
     qSetMessagePattern("%{time yyyyMMdd h:mm:ss.zzz ttt} %{type} %{file}:%{line} - %{message}\n");
     QString message = qFormatLogMessage(type, context, msg);
-    QFile *f = new QFile("risopromptlog.txt");
+    QString logFilePath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/RisoPrompt/risopromptlog.log";
+    QFile *f = new QFile(logFilePath);
     f->open(QIODevice::WriteOnly | QIODevice::Append);
     f->write(message.toStdString().c_str(), message.length());
     f->flush();
@@ -30,4 +32,10 @@ int main(int argc, char *argv[])
 }
 
 // to do
+// bugs:
+// need an error modal
+// view will reset to the top of the active message instead of respecting the scroll position
+// scroll is too fast
+
+// Readme and demo vid
 // follow up: get the list of available models and display as drop down

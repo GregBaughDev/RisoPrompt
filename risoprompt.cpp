@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QProcessEnvironment>
+#include <QSqlError>
 #include "./customplaintext.h"
 #include "./conversationwidget.h"
 #include "./modelconfigdialog.h"
@@ -19,7 +20,16 @@ RisoPrompt::RisoPrompt(QWidget *parent)
     ui->setupUi(this);
     ui->progressBar->setVisible(false);
 
-    PersistenceManager::initiateDBConnection();
+    try
+    {
+        PersistenceManager::initiateDBConnection();
+    }
+    catch (const QSqlError &e)
+    {
+        qCritical() << "Exception caught:" << e;
+        qCritical() << "Closing application";
+        throw;
+    }
 
     mModelConfig = PersistenceManager::loadModelConfig();
 
