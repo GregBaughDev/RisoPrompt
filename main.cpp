@@ -32,10 +32,5 @@ int main(int argc, char *argv[])
 }
 
 // to do
-// bugs:
-// need an error modal
-// view will reset to the top of the active message instead of respecting the scroll position
-// scroll is too fast
-
+    // WIP -> get the list of available models and display as drop down
 // Readme and demo vid
-// follow up: get the list of available models and display as drop down
