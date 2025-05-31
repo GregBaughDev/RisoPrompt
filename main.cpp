@@ -30,6 +30,3 @@ int main(int argc, char *argv[])
     w.show();
     return a.exec();
 }
-
-// to do
-// Readme and demo vid
