@@ -1,6 +1,6 @@
-# RisoPrompt
+![Risoprompt logo](./risoprompt.png)
 
-### A MacOS application built with Qt for interacting with Google Gemini LLMs
+### Risoprompt - A MacOS application built with Qt for interacting with Google Gemini LLMs
 
 **Requires >= Qt6**
 
@@ -12,7 +12,7 @@ Allows you to interact with Google Gemini LLM's through a custom, [Risograph](ht
 - Update model and API key easily
 - Copy conversations to the clipboard
 
-On loading up the application you'll be prompted to store the model you want to use (example format: `models/gemini-2.0-flash`) and your api key (accessed from your Google Gemini API keys). I'm working on adding all the models to a dropdown so you don't need to manually add it. This is then stored in the embedded DB and you can update it through the `Model` option.
+On loading up the application you'll be prompted to store the model you want to use (example format: `models/gemini-2.0-flash`) and your api key (accessed from your Google Gemini API keys). This is then stored in the embedded DB and you can update it through the `Model` option.
 
 I've been learning C++ in my spare time and wanted to learn how to build a GUI application with Qt. I also wanted my own interface for interacting with LLMs on my machine.
 
