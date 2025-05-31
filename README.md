@@ -1,4 +1,4 @@
-![Risoprompt logo](./risoprompt.png)
+![Risoprompt logo](./Contents/risoprompt.png)
 
 ### Risoprompt - A MacOS application built with Qt for interacting with Google Gemini LLMs
 
@@ -23,3 +23,9 @@ I used Qt open source as I wanted to learn the framework. You'll need Qt6 instal
 #### Font
 
 I used [Terminal Grotesque](https://velvetyne.fr/fonts/terminal-grotesque/) in the project. Credit to [Raphaël Bastide](https://velvetyne.fr/authors/raphael-bastide/) and [Velvetyne Type Foundry](https://velvetyne.fr/) for the creation of this font.
+
+#### Screenshots
+
+<img src="./Contents/Screenshot1.png" alt="Risoprompt screenshot" width="600"/>
+<img src="./Contents/Screenshot2.png" alt="Risoprompt screenshot" width="600"/>
+<img src="./Contents/Screenshot3.png" alt="Risoprompt screenshot" width="600"/>
