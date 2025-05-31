@@ -21,6 +21,7 @@ SOURCES += \
     main.cpp \
     messagedelegate.cpp \
     modelconfigdialog.cpp \
+    modelpersister.cpp \
     persistencemanager.cpp \
     promptrequest.cpp \
     risoprompt.cpp \
@@ -33,6 +34,11 @@ SOURCES += \
     ./proto/generated/google/ai/generativelanguage/v1/citation.qpb.cpp \
     ./proto/generated/google/ai/generativelanguage/v1/content.qpb.cpp \
     ./proto/generated/google/ai/generativelanguage/v1/generative_service_protobuftyperegistrations.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/model_service_client.grpc.qpb.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/model_service_protobuftyperegistrations.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/model_service.qpb.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/model.qpb.cpp \
+    ./proto/generated/google/ai/generativelanguage/v1/model_protobuftyperegistrations.cpp \
     ./proto/generated/google/api/field_behavior.qpb.cpp \
     ./proto/generated/google/api/client.qpb.cpp \
     ./proto/generated/google/api/launch_stage_protobuftyperegistrations.cpp \
@@ -60,6 +66,7 @@ HEADERS += \
     loadconversationdialog.h \
     messagedelegate.h \
     modelconfigdialog.h \
+    modelpersister.h \
     persistencemanager.h \
     promptrequest.h \
     risoprompt.h \
@@ -68,6 +75,9 @@ HEADERS += \
     ./proto/generated/google/ai/generativelanguage/v1/citation.qpb.h \
     ./proto/generated/google/ai/generativelanguage/v1/generative_service_client.grpc.qpb.h \
     ./proto/generated/google/ai/generativelanguage/v1/safety.qpb.h \
+    ./proto/generated/google/ai/generativelanguage/v1/model_service_client.grpc.qpb.h \
+    ./proto/generated/google/ai/generativelanguage/v1/model_service.qpb.h \
+    ./proto/generated/google/ai/generativelanguage/v1/model.qpb.h \
     ./proto/generated/google/api/http.qpb.h \
     ./proto/generated/google/api/client.qpb.h \
     ./proto/generated/google/api/launch_stage.qpb.h \

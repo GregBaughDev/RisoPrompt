@@ -14,8 +14,8 @@ QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
 RisoPrompt::RisoPrompt(QWidget *parent)
     : QMainWindow(parent),
-      ui(new Ui::RisoPrompt),
-      mMersistenceManager{parent}
+    ui(new Ui::RisoPrompt),
+    mPersistenceManager{parent}
 {
     ui->setupUi(this);
     ui->progressBar->setVisible(false);
@@ -41,6 +41,9 @@ RisoPrompt::RisoPrompt(QWidget *parent)
 
     promptRequest.setNewApiKey(mModelConfig.apiKey);
     promptRequest.setNewModel(mModelConfig.model);
+
+    mModelPersister.setModelConfig(mModelConfig);
+    mModelPersister.persistModels();
 
     connect(ui->newButton, &QPushButton::clicked, this, &RisoPrompt::onNewButtonClicked);
     connect(ui->copyButton, &QPushButton::clicked, this, &RisoPrompt::onCopyButtonClicked);
@@ -74,13 +77,13 @@ RisoPrompt::~RisoPrompt()
 
 void RisoPrompt::onModelButtonClicked()
 {
-    ModelConfigDialog dialog{this, this->mModelConfig};
+    ModelConfigDialog dialog{this, this->mModelConfig, this->mModelPersister.getModels()};
 
     connect(&dialog, &ModelConfigDialog::modelChanged, &this->promptRequest, &PromptRequest::setNewModel);
-    connect(&dialog, &ModelConfigDialog::modelChanged, &this->mMersistenceManager, &PersistenceManager::persistModel);
+    connect(&dialog, &ModelConfigDialog::modelChanged, &this->mPersistenceManager, &PersistenceManager::persistModel);
     connect(&dialog, &ModelConfigDialog::modelChanged, this, &RisoPrompt::setNewModel);
     connect(&dialog, &ModelConfigDialog::apiKeyChanged, &this->promptRequest, &PromptRequest::setNewApiKey);
-    connect(&dialog, &ModelConfigDialog::apiKeyChanged, &this->mMersistenceManager, &PersistenceManager::persistApiKey);
+    connect(&dialog, &ModelConfigDialog::apiKeyChanged, &this->mPersistenceManager, &PersistenceManager::persistApiKey);
     connect(&dialog, &ModelConfigDialog::apiKeyChanged, this, &RisoPrompt::setNewApiKey);
 
     dialog.exec();
@@ -93,18 +96,18 @@ void RisoPrompt::onCopyButtonClicked()
 
 void RisoPrompt::onNewButtonClicked()
 {
-    mMersistenceManager.setActiveConversation("");
+    mPersistenceManager.setActiveConversation("");
     emit newButtonClicked();
 }
 
 void RisoPrompt::onSaveButtonClicked()
 {
-    SaveConversationDialog dialog{this, mMersistenceManager.getActiveConversationName()};
+    SaveConversationDialog dialog{this, mPersistenceManager.getActiveConversationName()};
 
     // the below is a bit hacky, but the below deletes the current conversation (if it exists) in the DB before storing the updated version
-    connect(&dialog, &SaveConversationDialog::conversationSaved, &this->mMersistenceManager, &PersistenceManager::deleteConversation);
+    connect(&dialog, &SaveConversationDialog::conversationSaved, &this->mPersistenceManager, &PersistenceManager::deleteConversation);
     connect(&dialog, &SaveConversationDialog::conversationSaved, &this->promptRequest, &PromptRequest::saveMessagesToDB);
-    connect(&dialog, &SaveConversationDialog::conversationSaved, &this->mMersistenceManager, &PersistenceManager::setActiveConversation);
+    connect(&dialog, &SaveConversationDialog::conversationSaved, &this->mPersistenceManager, &PersistenceManager::setActiveConversation);
     dialog.exec();
 }
 
@@ -138,10 +141,10 @@ void RisoPrompt::onLoadButtonClicked()
 {
     LoadConversationDialog dialog{this};
 
-    connect(&dialog, &LoadConversationDialog::conversationDeleted, &this->mMersistenceManager, &PersistenceManager::deleteConversation);
+    connect(&dialog, &LoadConversationDialog::conversationDeleted, &this->mPersistenceManager, &PersistenceManager::deleteConversation);
     connect(&dialog, &LoadConversationDialog::conversationLoaded, ui->conversationWidget, &ConversationWidget::clearMessages);
     connect(&dialog, &LoadConversationDialog::conversationLoaded, &this->promptRequest, &PromptRequest::loadConversation);
-    connect(&dialog, &LoadConversationDialog::conversationLoaded, &this->mMersistenceManager, &PersistenceManager::setActiveConversation);
+    connect(&dialog, &LoadConversationDialog::conversationLoaded, &this->mPersistenceManager, &PersistenceManager::setActiveConversation);
 
     dialog.exec();
 }

@@ -6,7 +6,6 @@
 #include <memory.h>
 #include "./proto/generated/google/ai/generativelanguage/v1/generative_service_client.grpc.qpb.h"
 #include "./conversationmessage.h"
-#include "./persistencemanager.h"
 
 using namespace google::ai::generativelanguage::v1;
 

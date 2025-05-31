@@ -5,20 +5,22 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QPushButton>
+#include <QComboBox>
 #include "persistencemanager.h"
 
 class ModelConfigDialog : public QDialog
 {
     Q_OBJECT
-    QLineEdit mModelEditorText;
     QLabel mModelLabel;
     QPushButton mSaveButton;
     QLabel mApiKeyLabel;
     QLineEdit mApiKeyEditorText;
+    QComboBox mComboBox;
     ModelConfig mModelConfig;
+    QStringList mAvailableModels;
 
 public:
-    ModelConfigDialog(QWidget *parent, const ModelConfig &modelConfig);
+    ModelConfigDialog(QWidget *parent, const ModelConfig &modelConfig, QVector<QString> availableModels);
     void onSaveClicked();
 
 signals:

@@ -1,14 +1,17 @@
 #include "modelconfigdialog.h"
 
-ModelConfigDialog::ModelConfigDialog(QWidget *parent, const ModelConfig &modelConfig) :
+ModelConfigDialog::ModelConfigDialog(QWidget *parent, const ModelConfig &modelConfig, QStringList availableModels) :
     QDialog{parent},
-    mModelEditorText{this},
     mModelLabel{this},
     mSaveButton{this},
     mApiKeyLabel{this},
     mApiKeyEditorText{this},
-    mModelConfig{modelConfig}
+    mComboBox{this},
+    mModelConfig{modelConfig},
+    mAvailableModels{availableModels}
 {
+    // next time - sometimes the models aren't appearing in the list
+
     if (modelConfig.model == nullptr || modelConfig.apiKey == nullptr)
     {
         setWindowTitle("Configure Gemini model");
@@ -23,10 +26,13 @@ ModelConfigDialog::ModelConfigDialog(QWidget *parent, const ModelConfig &modelCo
     mModelLabel.move(50, 10);
     mModelLabel.setText("Current model (overwrite to change)");
 
-    mModelEditorText.move(50, 30);
-    mModelEditorText.setFixedWidth(300);
-    mModelEditorText.setText(mModelConfig.model);
-    mModelEditorText.displayText();
+    mComboBox.move(50, 30);
+    mComboBox.setFixedWidth(300);
+    mComboBox.addItems(mAvailableModels);
+    if (mModelConfig.model != nullptr)
+    {
+        mComboBox.setCurrentIndex(mAvailableModels.indexOf(mModelConfig.model));
+    }
 
     mApiKeyLabel.move(50, 60);
     mApiKeyLabel.setText("Update the API key (overwrite to change)");
@@ -46,12 +52,12 @@ ModelConfigDialog::ModelConfigDialog(QWidget *parent, const ModelConfig &modelCo
 
 void ModelConfigDialog::onSaveClicked()
 {
-    bool hasModelChanged = !mModelEditorText.text().isEmpty() && mModelEditorText.text() != mModelConfig.model;
+    bool hasModelChanged = mComboBox.currentText() != mModelConfig.model;
     bool hasApiKeyChanged = !mApiKeyEditorText.text().isEmpty() && mApiKeyEditorText.text() != mModelConfig.apiKey;
 
     if (hasModelChanged || hasApiKeyChanged)
     {
-        if (hasModelChanged) emit modelChanged(mModelEditorText.text());
+        if (hasModelChanged) emit modelChanged(mComboBox.currentText());
         if (hasApiKeyChanged) emit apiKeyChanged(mApiKeyEditorText.text());
 
         close();

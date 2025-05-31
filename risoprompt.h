@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "promptrequest.h"
 #include "persistencemanager.h"
+#include "modelpersister.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -16,8 +17,9 @@ class RisoPrompt : public QMainWindow
     Q_OBJECT
     Ui::RisoPrompt *ui;
     PromptRequest promptRequest;
+    PersistenceManager mPersistenceManager;
     ModelConfig mModelConfig;
-    PersistenceManager mMersistenceManager;
+    ModelPersister mModelPersister;
 
 public:
     RisoPrompt(QWidget *parent = nullptr);
