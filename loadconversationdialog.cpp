@@ -26,10 +26,10 @@ LoadConversationDialog::LoadConversationDialog(QWidget *parent) : QDialog{parent
     mDeleteButton.setText("delete");
     mDeleteButton.setFixedSize(240, 30);
 
-    QList<ConversationMetadata> metadata;
+    QVector<ConversationMetadata> metadata;
     PersistenceManager::populateConversationMetadata(&metadata);
 
-    QList<QTreeWidgetItem *> items;
+    QVector<QTreeWidgetItem *> items;
 
     for (int i = 0; i < metadata.length(); i++)
     {

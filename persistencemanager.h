@@ -35,10 +35,10 @@ class PersistenceManager : public QObject
 
 public:
     PersistenceManager(QObject *parent);
-    static void populateConversationMetadata(QList<ConversationMetadata> *list);
+    static void populateConversationMetadata(QVector<ConversationMetadata> *list);
     static void initiateDBConnection();
     static void insertConversationMessage(const QString &conversationName, const QString &author, const QString &messageBody, const int &sequence);
-    static QList<StoredConversationMessage> loadConversation(const QString &conversationName);
+    static QVector<StoredConversationMessage> loadConversation(const QString &conversationName);
     static ModelConfig loadModelConfig();
     QString getActiveConversationName();
 

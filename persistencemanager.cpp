@@ -140,7 +140,7 @@ void PersistenceManager::deleteConversation(const QString &conversationName)
     }
 }
 
-void PersistenceManager::populateConversationMetadata(QList<ConversationMetadata> *list)
+void PersistenceManager::populateConversationMetadata(QVector<ConversationMetadata> *list)
 {
     QSqlQueryModel metadataQuery;
     metadataQuery.setQuery("SELECT conversation_name, created_at FROM risoprompt GROUP BY conversation_name");
@@ -155,9 +155,9 @@ void PersistenceManager::populateConversationMetadata(QList<ConversationMetadata
     }
 }
 
-QList<StoredConversationMessage> PersistenceManager::loadConversation(const QString &conversationName)
+QVector<StoredConversationMessage> PersistenceManager::loadConversation(const QString &conversationName)
 {
-    QList<StoredConversationMessage> messageList;
+    QVector<StoredConversationMessage> messageList;
     QSqlQuery conversationQuery;
     conversationQuery.prepare("SELECT message_body, author FROM risoprompt WHERE conversation_name = :conversationName ORDER BY sequence ASC");
     conversationQuery.bindValue(":conversationName", conversationName);

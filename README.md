@@ -4,7 +4,7 @@
 
 **Requires >= Qt6**
 
-Allows you to interact with Google Gemini LLM's through a custom, Risography inspired, GUI application. Built with Qt, it interacts with Gemini with RPC.
+Allows you to interact with Google Gemini LLM's through a custom, [Risograph](https://en.wikipedia.org/wiki/Risograph) inspired, GUI application. Built with Qt, it interacts with Gemini with RPC.
 
 #### Features:
 
@@ -19,3 +19,7 @@ I've been learning C++ in my spare time and wanted to learn how to build a GUI a
 #### Instructions for compiling
 
 I used Qt open source as I wanted to learn the framework. You'll need Qt6 installed locally and will also need to manually compile the classes and gRPC client files from the `generative_service_client` Google proto file. You can use the [qtprotobufgen & qtgrpcgen](https://doc.qt.io/qt-6/qtgrpc-index.html) protoc plugins to do this. I wanted to automate this through my qmake file but I couldn't find a way to do it (the docs only specific cmake) but if you know how, let me know as it's far easier than hand compiling each required file. I've been building directly from Qt Creator.
+
+#### Font
+
+I used [Terminal Grotesque](https://velvetyne.fr/fonts/terminal-grotesque/) in the project. Credit to [Raphaël Bastide](https://velvetyne.fr/authors/raphael-bastide/) and [Velvetyne Type Foundry](https://velvetyne.fr/) for the creation of this font.

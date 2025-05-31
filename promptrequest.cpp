@@ -49,7 +49,7 @@ void PromptRequest::sendPromptRequest(const QString &prompt)
 void PromptRequest::addContentToCurrentContext(const QString &contents, const MessageAuthor &author)
 {
     Part part;
-    QList<Part> parts;
+    QVector<Part> parts;
     Content content;
 
     part.setText(contents);
@@ -109,7 +109,7 @@ void PromptRequest::loadConversation(const QString &conversationName)
     mContents.clear();
 
     // load conversation
-    QList<StoredConversationMessage> storedMessages = PersistenceManager::loadConversation(conversationName);
+    QVector<StoredConversationMessage> storedMessages = PersistenceManager::loadConversation(conversationName);
 
     for (int i = 0; i < storedMessages.count(); i++)
     {

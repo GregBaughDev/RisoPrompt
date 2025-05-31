@@ -14,7 +14,7 @@ class PromptRequest : public QObject
     Q_OBJECT
     GenerativeService::Client mClient;
     std::shared_ptr<QAbstractGrpcChannel> mChannel;
-    QList<Content> mContents;
+    QVector<Content> mContents;
     QString mModel;
     QString mApiKey;
     void addContentToCurrentContext(const QString &prompt, const MessageAuthor &author);
